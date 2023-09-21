@@ -69,6 +69,9 @@ function handleImageUpload(file) {
         uploadedImage.src = e.target.result; // 設置圖片的src屬性
         isUploading = false; // 上傳完成
         preventMultipleUploads = false; // 允許未來的上傳
+
+        // customUploadButton.style.display = 'none';
+        photoUpload.style.border = 'none';
     };
     reader.readAsDataURL(file); // 讀取文件為數據URL
 

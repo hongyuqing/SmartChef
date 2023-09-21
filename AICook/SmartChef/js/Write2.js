@@ -40,9 +40,14 @@ function dragDrop(e) {
     this.style.border = 'none';
 }
 
+let textAreaCounter = 2;
 addButton.addEventListener('click', function () {
     const newTextAreaContainer = firstTextArea.cloneNode(true);
     const newTextArea = newTextAreaContainer.querySelector('textarea');
+
+    const newId = `textField${textAreaCounter}`;
+    newTextArea.setAttribute('id', newId);
+
     newTextArea.value = '';
 
     newTextAreaContainer.addEventListener('dragstart', dragStart);
@@ -52,17 +57,18 @@ addButton.addEventListener('click', function () {
     newTextAreaContainer.addEventListener('drop', dragDrop);
 
     textAreaContainer.appendChild(newTextAreaContainer);
+    textAreaCounter++;
 });
 
 // 获取保存的用户数据
-var savedUserData = localStorage.getItem('userData');
-if (savedUserData) {
-    var userData = JSON.parse(savedUserData);
+// var savedUserData = localStorage.getItem('userData');
+// if (savedUserData) {
+//     var userData = JSON.parse(savedUserData);
 
-    // 在输入字段中设置恢复的数据
-    var titleInput = document.getElementById("title");
-    var descriptionInput = document.getElementById
-}
+//     // 在输入字段中设置恢复的数据
+//     var titleInput = document.getElementById("title");
+//     var descriptionInput = document.getElementById
+// }
 
 
 
