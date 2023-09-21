@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Loginstyle.css">
+    <title>Smart Chef - Login</title>
+</head>
+
+<body>
+    <div class="Register">
+        <div class="Register-word">
+            <a href="SmartChef_Register.html" class="word">註冊</a>
+        </div>
+    </div>
+    <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="74" height="79" viewBox="0 0 74 79" fill="none" class="s-logo">
+            <path
+                d="M21.0609 13.3415L23.6661 14.5087L24.4795 11.7723C26.1083 6.29277 31.201 2.5 37 2.5C42.799 2.5 47.8917 6.29277 49.5205 11.7723L50.3339 14.5087L52.9391 13.3415C54.7061 12.5497 56.5402 12.1341 58.4211 12.1341C61.8983 12.1341 65.2279 13.5012 67.6787 15.9261C70.1286 18.3502 71.5 21.6322 71.5 25.0488C71.5 30.8953 67.4681 36.0478 61.6899 37.5421L59.8158 38.0267V39.9624V64.939H14.1842V39.9624V38.0247L12.3077 37.5414C9.49802 36.8179 7.01468 35.1955 5.24233 32.9333C3.47105 30.6724 2.50846 27.8988 2.5 25.0454C2.50091 21.63 3.87226 18.3493 6.32134 15.9261C8.77213 13.5012 12.1017 12.1341 15.5789 12.1341C17.4598 12.1341 19.2939 12.5497 21.0609 13.3415ZM35.0526 32.1829H32.5526V34.6829V61.6585V64.1585H35.0526H38.9474H41.4474V61.6585V34.6829V32.1829H38.9474H35.0526ZM23.3684 39.8902H20.8684V42.3902V61.6585V64.1585H23.3684H27.2632H29.7632V61.6585V42.3902V39.8902H27.2632H23.3684ZM46.7368 39.8902H44.2368V42.3902V61.6585V64.1585H46.7368H50.6316H53.1316V61.6585V42.3902V39.8902H50.6316H46.7368ZM14.1842 75.1463V73.7927H59.8158V75.1463C59.8158 75.4967 59.6754 75.8382 59.4167 76.0942C59.1571 76.351 58.7995 76.5 58.4211 76.5H15.5789C15.2005 76.5 14.8429 76.351 14.5833 76.0942C14.3246 75.8382 14.1842 75.4967 14.1842 75.1463Z"
+                fill="#AC8F75" stroke="#AC8F75" stroke-width="5" />
+        </svg>
+        <h1>智慧廚師</h1>
+    </div>
+
+    <div class="Hello">
+        <h1 class="H-word">HELLO!</h1>
+        <form id="loginForm">
+            <div class="H-input">
+                <input placeholder="UserName" class="UserName" id="username" required autocomplete="username">
+            </div>
+            <div class="H-input">
+                <input type="password" placeholder="Password" class="UserName" id="password" required
+                    autocomplete="current-password">
+            </div>
+            <div class="H-input">
+                <!-- <a href="SmartChef_Home.html"> -->
+                <input type="button" value="登入" class="b-login" id="loginButton" >
+                <!-- </a> -->
+            </div>
+            <div class="H-input">
+                <a href="SmartChef_Forget.html" class="forget">忘記密碼</a>
+            </div>
+        </form>
+
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var form = document.getElementById("loginForm");
+            var loginButton = document.getElementById('loginButton');
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                saveData();
+            });
+
+            loginButton.addEventListener("click", function (event) {
+                saveData();
+            });
+        });
+
+        async function saveData() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                alert("請輸入使用者名稱和密碼");
+                return;
+            }
+
+            var loginButton = document.getElementById('loginButton');
+            loginButton.disabled = true;
+
+            try {
+                var userData = {
+                    "member_Account": username,
+                    "member_Password": password
+                };
+
+                var jsonData = JSON.stringify(userData);
+
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Cookie", ".AspNetCore.Cookies=CfDJ8LbK0dlAlwdApg2nSrCXeOKOK80YVZV3ienW4ZE2h9FuTCF3JOpJoWB7IDg-SdAY78YsekoLKYbAXZMf9am_fzAFMriw4MibGhJEiLOeDwFJCX7bz1GOTd_SCCPJGuBY44fPdjugU8tRyB41CpMTNhqDIjBy2SDYoXY1JVPomOEi82fffdSueB1XPFDjAz9JMdy9rtBZcm3_X_MygljtySgpBeYxtNvc30JFStk_CtuKaMgBOWdCiG7VzqXPFQDyweFr6m9hzqjxCJ4vRoFJ01lT2UmPXLGrDzg1OOZVJqjEP2-IIaNkFa9ka6IK_w4yn-xZ4e7qOqiM39k8GwgPcsMVazizjvdgbzy3j9sfy-ADOI-sPgU6daM2-lyFVZFRd1wkSsBoqKaSw4uSacxMamg; AICookToken=123");
+
+                var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: jsonData,
+                    redirect: 'follow'
+                };
+
+                const response = await fetch("http://localhost:5000/AICook/Login", requestOptions);
+                const result = await response.text();
+                console.log(result);
+                if (response.status === 200) {
+                    console.log(jsonData);
+                    alert("登入成功");
+                    window.location.href = 'SmartChef_Home.html';
+                } else if (response.status === 404) {
+                    alert("未註冊");
+                } else if (response.status === 401) {
+                    alert("帳號或密碼錯誤，請重新輸入");
+                } else {
+                    alert("登入失敗，請稍後重試");
+                }
+            } catch (error) {
+                console.error('發生錯誤:', error);
+                alert("登入失敗，請稍後重試");
+            } finally {
+                loginButton.disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>
+

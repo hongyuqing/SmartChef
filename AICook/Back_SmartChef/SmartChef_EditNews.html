@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Consolesstyle.css">
+    <title>EditNews</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="57" height="60" viewBox="0 0 57 60" fill="none">
+                <path d="M16.552 10.6633L19.1572 11.8305L19.9706 9.09412C21.1279 5.20096 24.7492 2.5 28.8789 2.5C33.0086 2.5 36.63 5.20096 37.7872 9.09412L38.6006 11.8305L41.2058 10.6633C42.473 10.0955 43.779 9.80121 45.1128 9.80121C47.5895 9.80121 49.9596 10.775 51.7029 12.4999C53.4453 14.2239 54.4193 16.5566 54.4193 18.9832C54.4193 23.1313 51.5569 26.8 47.4385 27.8651L45.5644 28.3497V30.2854V48.6085H41.7096V46.7278V32.1253V29.6253H39.2096H36.258H33.758V32.1253V46.7278V48.6085H32.8547V46.7278V26.2844V23.7844H30.3547H27.4031H24.9031V26.2844V46.7278V48.6085H23.9999V46.7278V32.1253V29.6253H21.4999H18.5483H16.0483V32.1253V46.7278V48.6085H12.1934V30.2854V28.3477L10.3169 27.8644C8.31574 27.3491 6.54849 26.194 5.28799 24.5851L3.32004 26.1269L5.28799 24.5851C4.02857 22.9775 3.34479 21.0066 3.33856 18.9798C3.33947 16.5544 4.31336 14.2231 6.05497 12.4999C7.79828 10.775 10.1683 9.80121 12.645 9.80121C13.9789 9.80121 15.2848 10.0955 16.552 10.6633ZM12.1934 56.9495V56.529H45.5644V56.9495C45.5644 57.0524 45.5234 57.1565 45.4416 57.2374L47.1999 59.0146L45.4416 57.2375C45.3589 57.3193 45.2411 57.37 45.1128 57.37H12.645C12.5167 57.37 12.399 57.3193 12.3163 57.2375L10.5579 59.0146L12.3163 57.2374C12.2345 57.1565 12.1934 57.0524 12.1934 56.9495Z" fill="#AC8F75" stroke="#AC8F75" stroke-width="5"/>
+              </svg>
+            <p class="logoname">智慧廚師</p>
+        </div>
+        <div class="bar">
+            <ul>
+                <li><a href="SmartChef_Consoles.html" class="tab-active">控制台</a></li>
+                <li><a href="A _Tutorials.html" class="tab-hover">教程管理</a></li>
+                <li><a href="SmartChef_MemberMana.html" class="tab-hover">會員管理</a></li>
+                <li><a href="SmartChef_Feedback.html" class="tab-hover">使用者回饋</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="AddNews-content">
+        <h1 class="h1-News">最新消息</h1>
+
+        <form action="#" method="post">
+            <div class="form-top">
+                <label for="title" class="lab-title">標題 </label>
+                <input type="text" id="title" name="title" required placeholder="輸入標題...">
+            </div>
+            <div class="form-bottom">
+                <label for="content" class="lab-title">內容</label>
+                <textarea id="content" name="content" rows="4" required placeholder="輸入內容..."></textarea>
+            </div>
+            <div class="button">
+                <input type="submit" value="確定" class="Edit-button">
+                <input type="button" value="取消" class="cancel-button">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

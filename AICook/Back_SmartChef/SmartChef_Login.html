@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Loginstyle.css">
+    <title>Smart Chef - Login</title>
+</head>
+<body>
+    <div class="Register">
+        <!-- <div class="Register-word">
+            <a href="SmartChef_Register.html" class="word">註冊</a>
+        </div> -->
+    </div>
+    <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="109" height="116" viewBox="0 0 109 116" fill="none">
+            <path d="M31.8686 18.4461L34.4737 19.6133L35.2871 16.8769C37.8147 8.37375 45.7116 2.5 54.6923 2.5C63.673 2.5 71.5699 8.37375 74.0975 16.8769L74.9109 19.6133L77.5161 18.4461C80.2358 17.2275 83.0766 16.5807 86 16.5807C91.3842 16.5807 96.5427 18.6972 100.342 22.4564C104.14 26.2147 106.269 31.3063 106.269 36.6098C106.269 45.6933 100.008 53.6738 91.0664 55.9863L89.1923 56.4709V58.4066V96.0647H20.1923V58.4066V56.4689L18.3158 55.9856C13.9651 54.8653 10.1169 52.3523 7.36897 48.8449C4.62211 45.3388 3.12811 41.0354 3.11539 36.6064C3.1163 31.3041 5.24519 26.2139 9.04271 22.4564C12.8419 18.6972 18.0004 16.5807 23.3846 16.5807C26.3081 16.5807 29.1488 17.2275 31.8686 18.4461ZM51.8462 48.1904H49.3462V50.6904V90.1163V92.6163H51.8462H57.5385H60.0385V90.1163V50.6904V48.1904H57.5385H51.8462ZM34.7692 59.455H32.2692V61.955V90.1163V92.6163H34.7692H40.4615H42.9615V90.1163V61.955V59.455H40.4615H34.7692ZM68.9231 59.455H66.4231V61.955V90.1163V92.6163H68.9231H74.6154H77.1154V90.1163V61.955V59.455H74.6154H68.9231ZM88.2667 112.035L90.0251 113.812L88.2667 112.035C87.67 112.625 86.8552 112.962 86 112.962H23.3846C22.5295 112.962 21.7146 112.625 21.1179 112.035L19.3596 113.812L21.1179 112.035C20.5221 111.445 20.1923 110.651 20.1923 109.829V106.697H89.1923V109.829C89.1923 110.651 88.8625 111.445 88.2667 112.035Z" fill="#AB8383" stroke="#AB8383" stroke-width="5"/>
+          </svg>
+        <h1>智慧廚師</h1>
+    </div>
+        
+    <div class="Hello">
+        <h1 class="H-word">MANAGER</h1>
+        <div class="H-input">
+           <input placeholder="Account" class="UserName" id="username">
+        </div>
+        <div class="H-input">
+           <input type="password" placeholder="Password" class="UserName" id="password">
+        </div>
+        <div class="H-input">
+            <a href="SmartChef_Consoles.html">
+                <input type="submit" value="登入" class="b-login" onclick="saveData()">
+            </a>
+        </div>
+        <!-- <div class="H-input">
+           <a href="SmartChef_Forget.html" class="forget">忘記密碼</a>
+        </div> -->
+   </div>
+    <script>
+        function saveData() {
+
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            var userData = {
+                "Member_UserName": username,
+                "Member_Password": password
+            };
+
+            var jsonData = JSON.stringify(userData);
+            localStorage.setItem('userData', jsonData);
+            console.log(jsonData);
+        }
+    </script>
+</body>
+</html>

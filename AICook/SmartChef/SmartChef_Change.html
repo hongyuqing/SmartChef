@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Loginstyle.css">
+    <title>Smart Chef - ChangePassword</title>
+</head>
+<body>
+    <div class="Register2">
+        <div class="back">
+            <a href="SmartChef_UserEdit.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M16.62 2.99004C16.5039 2.87363 16.366 2.78127 16.2141 2.71826C16.0622 2.65524 15.8994 2.62280.735 2.62280.5706 2.6228 15.4078 2.65524 15.2559 2.71826C15.1041 2.78127 14.9661 2.87363 14.85 2.99004L6.54 11.3C6.4473 11.3926 6.37375 11.5024 6.32357 11.6234C6.27339 11.7444 6.24756 11.8741 6.24756 12.005C6.24756 12.1360 6.27339 12.2657 6.32357 12.3867C6.37375 12.5076 6.4473 12.6175 6.54 12.71L14.85 21.02C15.34 21.51 16.13 21.51 16.62 21.02C17.11 20.53 17.11 19.74 16.62 19.25L9.38 12L16.63 4.75004C17.11 4.27004 17.11 3.47004 16.62 2.99004Z" fill="black"/>
+                </svg>
+            </a>
+        </div>
+        <div class="Register-word">
+            <!-- <a href="#" class="word">登入</a> -->
+        </div>
+    </div>
+    <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="74" height="79" viewBox="0 0 74 79" fill="none">
+            <path d="M21.0609 13.3415L23.6661 14.5087L24.4795 11.7723C26.1083 6.29277 31.201 2.5 37 2.5C42.799 2.5 47.8917 6.29277 49.5205 11.7723L50.3339 14.5087L52.9391 13.3415C54.7061 12.5497 56.5402 12.1341 58.4211 12.1341C61.8983 12.1341 65.2279 13.5012 67.6787 15.9261C70.1286 18.3502 71.5 21.6322 71.5 25.0488C71.5 30.8953 67.4681 36.0478 61.6899 37.5421L59.8158 38.0267V39.9624V64.939H14.1842V39.9624V38.0247L12.3077 37.5414C9.49802 36.8179 7.01468 35.1955 5.24233 32.9333C3.47105 30.6724 2.50846 27.8988 2.5 25.0454C2.50091 21.63 3.87226 18.3493 6.32134 15.9261C8.77213 13.5012 12.1017 12.1341 15.5789 12.1341C17.4598 12.1341 19.2939 12.5497 21.0609 13.3415ZM35.0526 32.1829H32.5526V34.6829V61.6585V64.1585H35.0526H38.9474H41.4474V61.6585V34.6829V32.1829H38.9474H35.0526ZM23.3684 39.8902H20.8684V42.3902V61.6585V64.1585H23.3684H27.2632H29.7632V61.6585V42.3902V39.8902H27.2632H23.3684ZM46.7368 39.8902H44.2368V42.3902V61.6585V64.1585H46.7368H50.6316H53.1316V61.6585V42.3902V39.8902H50.6316H46.7368ZM14.1842 75.1463V73.7927H59.8158V75.1463C59.8158 75.4967 59.6754 75.8382 59.4167 76.0942C59.1571 76.351 58.7995 76.5 58.4211 76.5H15.5789C15.2005 76.5 14.8429 76.351 14.5833 76.0942C14.3246 75.8382 14.1842 75.4967 14.1842 75.1463Z" fill="#AC8F75" stroke="#AC8F75" stroke-width="5"/>
+        </svg>
+        <h1>智慧廚師</h1>
+    </div>
+        
+    <div class="Hello">
+         <h1 class="H-word">CHANGE</h1>
+         <div class="H-input">
+            <input type="password" placeholder="Old Password" class="UserName" id="oldPassword">
+         </div>
+         <div class="H-input">
+            <input type="password" placeholder="New Password" class="UserName" id="newPassword">
+         </div>
+         <div class="H-input">
+            <input type="password" placeholder="Check New Password" class="UserName" id="confirmPassword">
+         </div>
+         <div class="H-input">
+            <!-- <a href="SmartChef_UserEdit.html"> -->
+                <input type="submit" value="修改密碼" class="b-login" onclick="changePassword()">
+            <!-- </a> -->
+         </div>
+    </div>
+    <script>
+        function changePassword() {
+            var newPassword = document.getElementById('newPassword').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword === confirmPassword) {
+                alert('密碼修改成功');
+
+                var passwordData = {
+                    "NewPassword": newPassword
+                };
+
+                var jsonData = JSON.stringify(passwordData);
+
+                localStorage.setItem('passwordData', jsonData);
+                console.log(jsonData);
+                window.location.href = 'SmartChef_UserEdit.html';
+            } else {
+                alert('密碼不匹配，請重新輸入');
+                window.location.href = 'SmartChef_Change.html';
+            }
+        }
+    </script>
+</body>
+</html>
