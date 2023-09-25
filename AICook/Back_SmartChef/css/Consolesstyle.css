@@ -383,6 +383,54 @@ input[type="submit"]:hover {
     align-items: center;
     justify-content: center;
 }
+.content-top-F{
+    width: 95.1%;
+    display: flex;
+    justify-content: space-between;
+}
+.content-top-F a{
+    margin-right: 13px;
+}
+.content-tab-active{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1px;
+    text-decoration: none;
+    width: 168px;
+    height: 69px;
+    background: #D9D9D9;
+    color: #AB8383;
+    text-align: center;
+    font-family: Noto Serif TC;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.content-tab-hover{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1px;
+    text-decoration: none;
+    width: 168px;
+    height: 69px;
+    background: #AB8383;
+    color: #FFFDF4;
+    text-align: center;
+    font-family: Noto Serif TC;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.content-top-F ul{
+    display: flex;
+}
+.content-top-F li{
+    list-style: none;
+}
 .Feedback-content{
     width: 95%;
     border: 1px solid #AB8383;
