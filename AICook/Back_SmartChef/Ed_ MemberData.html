@@ -49,8 +49,10 @@
                         <div class="word">
                             <div class="con-title">廚神入化</div>
                             <div class="username">
-                                <textarea class="text-field2"  id="title" draggable="true" placeholder="🖊️ Account"></textarea>
-                                <textarea class="text-field2"  id="title" draggable="true" placeholder="🖊️ Email"></textarea>
+                                <div>Account：abcd1234</div>
+                                <div>Email：abcd1234@gmail.com</div>
+                                <!-- <textarea class="text-field2"  id="title" draggable="true" placeholder="🖊️ Account"></textarea>
+                                <textarea class="text-field2"  id="title" draggable="true" placeholder="🖊️ Email"></textarea> -->
                             </div>
                         </div>
                         <div class="button">
@@ -136,7 +138,7 @@
                 }).then((value) => {
                     if (value === "Btn A") {
                         // 使用 window.location.href 跳轉到指定的HTML頁面
-                        window.location.href = "A _CookTuto.html";//確認跳哪一頁
+                        window.location.href = "MemberData.html";//確認跳哪一頁
                     }
                 });
             }
@@ -160,7 +162,7 @@
                 })
                     .then((value) => {
                         if (value !== "" && value !== null) {
-                            swal(`已停權 料理小天才的會員資料!`)
+                            swal(`已停權 廚神入化 的會員資料!`)
                             .then((value) => {
                                 window.location.href = "Sus_ MemberData.html";
                             });       

@@ -240,8 +240,8 @@ header{
 }
 .username{
     display: flex;
-    width: 189px;
-    height: auto;
+    width: 409px;
+    height: 87px;
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
@@ -251,7 +251,6 @@ header{
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    margin-top: 15px;
 }
 .text-field2{
     width: 365px;
@@ -351,6 +350,7 @@ header{
     font-weight: 600;
     line-height: normal;
     margin-top: 64px;
+    border-radius: 20px;
 }
 .r4{
     padding: 8px 14px 4px;

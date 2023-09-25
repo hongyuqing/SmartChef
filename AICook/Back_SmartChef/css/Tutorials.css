@@ -475,6 +475,7 @@ header{
     font-weight: 600;
     line-height: normal;
     margin-top: 64px;
+    border-radius: 20px;
 }
 .r4{
     padding: 8px 14px 4px;
