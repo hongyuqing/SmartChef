@@ -27,7 +27,7 @@
         <h1 class="H-word">HELLO!</h1>
         <form id="loginForm">
             <div class="H-input">
-                <input placeholder="UserName" class="UserName" id="username" required autocomplete="username">
+                <input placeholder="Account" class="UserName" id="username" required autocomplete="username">
             </div>
             <div class="H-input">
                 <input type="password" placeholder="Password" class="UserName" id="password" required
@@ -35,7 +35,7 @@
             </div>
             <div class="H-input">
                 <!-- <a href="SmartChef_Home.html"> -->
-                <input type="button" value="登入" class="b-login" id="loginButton" >
+                <input type="button" value="登入" class="b-login" id="loginButton">
                 <!-- </a> -->
             </div>
             <div class="H-input">
@@ -106,13 +106,14 @@
                 }
             } catch (error) {
                 console.error('發生錯誤:', error);
+                response.body(result)
                 alert("登入失敗，請稍後重試");
             } finally {
                 loginButton.disabled = false;
             }
         }
+       
     </script>
 </body>
 
 </html>
-
