@@ -146,37 +146,53 @@
   </footer>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const logoutButton = document.getElementById('logoutButton');
-      logoutButton.addEventListener('click', function() {
-        const confirmLogout = confirm('確定要登出嗎？');
-  
-        // if (confirmLogout) {
-        //     alert('執行登出操作...');
-        // } else {
-        //     alert('取消登出操作');
-        // }
-      });
+        const logoutButton = document.getElementById('logoutButton');
+        logoutButton.addEventListener('click', function () {
+            const confirmLogout = confirm('確定要登出嗎？');
+
+            if (confirmLogout) {
+                logout();
+            } else {
+                alert('取消登出操作');
+                // 不執行任何跳轉，保持在原本的頁面上
+            }
+        });
     });
 
     async function logout() {
-      try {
-        const response = await fetch("http://localhost:5000/AICook/Logout", {
-          method: 'DELETE',
-          headers: {
-            'Cookie': 'AICookToken=123'
-          }
-        });
-  
-        if (!response.ok) {
-          throw new Error('登出失敗');
+        // 檢查本地存儲中是否有令牌
+        var accessToken = localStorage.getItem('accessToken');
+
+        if (!accessToken) {
+            alert("請先登入");
+            return;
         }
-        console.log('登出成功');
-        window.location.href = "SmartChef_Login.html";
-      } catch (error) {
-        console.error('發生錯誤:', error);
-      }
+
+        try {
+            const response = await fetch("http://localhost:5000/AICook/Login", {
+                method: 'DELETE',
+                headers: {
+                    'Cookie': 'AICookToken=123'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('登出失敗');
+            }
+
+            console.log('登出成功');
+            // 清除本地存儲的令牌
+            localStorage.removeItem('accessToken');
+            // 重定向到登入頁面
+            // window.location.href = "SmartChef_Login.html";
+        } catch (error) {
+            console.error('發生錯誤:', error);
+        }
     }
-  </script>
+</script>
+
+
+
   
   
 </body>
