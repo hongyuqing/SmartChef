@@ -37,9 +37,15 @@
             </div>
             <div class="button">
                 <input type="submit" value="確定" class="Edit-button">
-                <input type="button" value="取消" class="cancel-button">
+                <input type="button" value="取消" class="cancel-button" id="cancel-button">
             </div>
         </form>
     </div>
 </body>
+<script>
+    const cancelbutton = document.getElementById('cancel-button'); // 顯示上傳的圖片
+    cancelbutton.addEventListener('click', function () {
+        window.location.href = "SmartChef_Consoles.html";
+});
+</script>
 </html>
