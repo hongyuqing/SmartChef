@@ -152,10 +152,9 @@
 
             if (confirmLogout) {
                 logout();
-            } else {
-                alert('取消登出操作');
-                // 不執行任何跳轉，保持在原本的頁面上
-            }
+                console.log('登出成功');
+                window.location.href = "SmartChef_Login.html";
+            } 
         });
     });
 
@@ -166,6 +165,9 @@
         if (!accessToken) {
             alert("請先登入");
             return;
+        }
+        else{
+          false;
         }
 
         try {
@@ -179,12 +181,7 @@
             if (!response.ok) {
                 throw new Error('登出失敗');
             }
-
-            console.log('登出成功');
-            // 清除本地存儲的令牌
             localStorage.removeItem('accessToken');
-            // 重定向到登入頁面
-            // window.location.href = "SmartChef_Login.html";
         } catch (error) {
             console.error('發生錯誤:', error);
         }
