@@ -174,7 +174,7 @@ th.colspan {
     column-span: all;
 }
 .Edit{
-    color: #AB8383;
+    color: #4B89DC;
     text-align: center;
     font-size: 26px;
     font-weight: bold;
@@ -407,6 +407,7 @@ input[type="submit"]:hover {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    border-radius: 15px 15px 0px 0px;
 }
 .content-tab-hover{
     display: flex;
@@ -424,6 +425,7 @@ input[type="submit"]:hover {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    border-radius: 15px 15px 0px 0px;
 }
 .content-top-F ul{
     display: flex;
@@ -470,6 +472,7 @@ input[type="submit"]:hover {
     color: #AB8383; 
     text-decoration: underline;
 }
+
 /*------------------------------Feedback2------------------------------*/
 .FB2-from{
     margin-top: 20px;
