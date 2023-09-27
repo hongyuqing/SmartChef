@@ -86,8 +86,6 @@
                 };
 
                 var jsonData = JSON.stringify(userData);
-                localStorage.setItem('userData', jsonData);
-                console.log(jsonData);
 
                 var myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/json");
@@ -105,6 +103,9 @@
                 const result = await response.text();
 
                 if (response.ok) {
+                    localStorage.setItem('userData', jsonData);
+                    console.log(jsonData);
+                    
                     console.log("註冊成功");
                     alert('註冊成功！請收信。');
                     window.location.href = 'SmartChef_Login.html';
