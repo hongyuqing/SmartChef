@@ -526,3 +526,15 @@ input[type="submit"]:hover {
     font-weight: bold;
     text-align: left;
 }
+select {
+    padding: 10px;
+    background-color: #AB8383;
+    color: #FFF;
+    text-align: center;
+    font-family: Noto Serif TC;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border: none;
+}

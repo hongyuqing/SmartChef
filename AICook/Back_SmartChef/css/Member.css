@@ -357,6 +357,7 @@ header{
     width: 678px;
     height: auto;
     background-color:  white;
+
 }
 .text-field{
     width: 630px;
@@ -365,10 +366,12 @@ header{
     border: 1px solid rgba(0, 0, 0, 0.25);
     background: rgba(255, 255, 255, 0.30);
     color: #000;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
     padding: 15px 20px;
     /* line-height: 73px; */
+    color: #000;
+    font-family: Noto Serif TC;
 }
 /* ----------內容中---------- */
 .content-list{
