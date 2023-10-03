@@ -101,6 +101,8 @@
 
                 const response = await fetch("http://localhost:5000/AICook/Register", requestOptions);
                 const result = await response.text();
+                console.log(result);
+                var JsonResult = JSON.parse(result);
 
                 if (response.ok) {
                     localStorage.setItem('userData', jsonData);
@@ -110,12 +112,12 @@
                     alert('註冊成功！請收信。');
                     window.location.href = 'SmartChef_Login.html';
                 } else {
-                    console.error('註冊失敗:', result);
-                    alert("註冊失敗，請稍後重試");
+                    console.error('註冊失敗:', JsonResult);
+                    alert(JsonResult[ErrorMessage]);
                 }
             } catch (error) {
                 console.error('發生錯誤:', error);
-                alert("註冊失敗，請稍後重試");
+                alert(JsonResult[ErrorMessage]);
             }
         }
     </script>

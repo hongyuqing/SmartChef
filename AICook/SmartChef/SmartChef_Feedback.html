@@ -52,7 +52,14 @@
 
             feedbackForm.addEventListener("submit", async function (e) {
                 e.preventDefault();
+                const accessToken = localStorage.getItem('accessToken');  // 從 localStorage 中獲取用戶的 accessToken
 
+                // 檢查用戶是否已登入，如果未登入，則提示用戶並返回
+                if (!accessToken) {
+                    alert("請先登入");
+                    return;
+                }
+                
                 const selectedOption = selectElement.value;
                 const feedbackText = textareaElement.value;
 
@@ -104,4 +111,5 @@
         });
     </script>
 </body>
+
 </html>
