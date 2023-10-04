@@ -52,11 +52,20 @@
                 return;
             }
 
+            var storedUserData = localStorage.getItem('userData');
+            if (!storedUserData) {
+                alert("找不到用户数据");
+                return;
+            }
+
+            var userData = JSON.parse(storedUserData);
+            var userEmail = userData.email;
+
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
-                "email": "jenny00122100@gmail.com",
+                "email": userEmail,
                 "authCode": AuthCode
             });
 
@@ -84,17 +93,9 @@
                     console.error('error', error);
                     alert(error.message);
                 });
-
-            var userData = {
-                "authCode": AuthCode
-            };
-
-            var jsonData = JSON.stringify(userData);
-            localStorage.setItem('userData', jsonData);
-            console.log(jsonData);
         }
-
     </script>
+
 </body>
 
 </html>
