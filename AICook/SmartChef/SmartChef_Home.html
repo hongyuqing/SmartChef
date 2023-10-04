@@ -132,24 +132,21 @@
       }
 
       var data = await response.json();
-      // 在这里处理从API获取的数据，例如将数据渲染到页面上
       renderNews(data);
     } catch (error) {
       console.error('Error:', error);
-      // 在这里可以加入更多的错误处理逻辑，例如显示一个错误提示给用户
     }
 
     function renderNews(newsData) {
       var newsList = document.querySelector('.news');
       newsData.forEach(function (news) {
-        var newsItem = document.getElementById('news-' + news.news_Id); // 获取li元素
+        var newsItem = document.getElementById('news-' + news.news_Id); 
         if (newsItem) {
-          newsItem.textContent = news.news_Title; // 只显示news_Title字段的内容
+          newsItem.textContent = news.news_Title; 
         } else {
-          // 如果找不到对应的li元素，可以创建一个新的li元素并添加到ul中
           var newNewsItem = document.createElement('li');
           newNewsItem.id = 'news-' + news.news_Id;
-          newNewsItem.textContent = news.news_Title; // 只显示news_Title字段的内容
+          newNewsItem.textContent = news.news_Title; 
           newsList.appendChild(newNewsItem);
         }
       });
@@ -170,9 +167,7 @@
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-
           var data = await response.json();
-          // 在这里处理从API获取的数据
           console.log(data);
         } catch (error) {
           console.error('Error:', error);
