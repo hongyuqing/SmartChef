@@ -55,10 +55,10 @@
         <h1>最新消息</h1>
         <hr>
         <ul class="news">
-          <li id="news-1"></li>
+          <!-- <li id="news-1"></li>
           <li id="news-2"></li>
           <li id="news-3"></li>
-          <li id="news-4"></li>
+          <li id="news-4"></li> -->
         </ul>
       </div>
       <footer>
@@ -113,68 +113,67 @@
 
 </body>
 <script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    var myCarousel = document.querySelector('#carouselExampleIndicators');
-    var carousel = new bootstrap.Carousel(myCarousel);
+document.addEventListener("DOMContentLoaded", async function () {
+  var accessToken = localStorage.getItem('accessToken');
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", "Bearer " + accessToken);
 
-    try {
-      var response = await fetch("http://localhost:5000/AICook/News/GetList", {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        redirect: 'follow'
-      });
+  try {
+    var response = await fetch("http://localhost:5000/AICook/News/GetList", {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    });
 
-      if (!response.ok) {
-        
-        throw new Error('Network response was not ok');
-      }
-
-      var data = await response.json();
-      renderNews(data);
-    } catch (error) {
-      console.error('Error:', error);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
 
-    function renderNews(newsData) {
-      var newsList = document.querySelector('.news');
-      newsData.forEach(function (news) {
-        var newsItem = document.getElementById('news-' + news.news_Id); 
-        if (newsItem) {
-          newsItem.textContent = news.news_Title; 
-        } else {
-          var newNewsItem = document.createElement('li');
-          newNewsItem.id = 'news-' + news.news_Id;
-          newNewsItem.textContent = news.news_Title; 
-          newsList.appendChild(newNewsItem);
-        }
-      });
-    }
+    var data = await response.json();
+    renderNews(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 
-    document.querySelector('.news').addEventListener('click', async function (event) {
-      if (event.target.tagName === 'LI') {
-        var newsId = event.target.id.split('-')[1];
-        try {
-          var response = await fetch(`http://localhost:5000/AICook/News/Get/${newsId}`, {
-            method: 'GET',
-            headers: {
-              "Content-Type": "application/json"
-            },
-            redirect: 'follow'
-          });
-
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          var data = await response.json();
-          console.log(data);
-        } catch (error) {
-          console.error('Error:', error);
-        }
+  function renderNews(newsData) {
+    var newsList = document.querySelector('.news');
+    newsData.forEach(function (news) {
+      var newsItem = document.getElementById('news-' + news.news_Id);
+      if (newsItem) {
+        newsItem.textContent = news.news_Title;
+      } else {
+        var newNewsItem = document.createElement('li');
+        newNewsItem.id = 'news-' + news.news_Id;
+        newNewsItem.textContent = news.news_Title;
+        newsList.appendChild(newNewsItem);
       }
     });
+  }
+
+  document.querySelector('.news').addEventListener('click', async function (event) {
+    if (event.target.tagName === 'LI') {
+      var newsId = event.target.id.split('-')[1];
+      try {
+        var response = await fetch(`http://localhost:5000/AICook/News/Get/${newsId}`, {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        var data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
   });
+});
+
+
 
 </script>
 

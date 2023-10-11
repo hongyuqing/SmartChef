@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/Consolesstyle.css">
     <title>EditNews</title>
 </head>
+
 <body>
     <header>
         <div class="logo">
             <svg xmlns="http://www.w3.org/2000/svg" width="57" height="60" viewBox="0 0 57 60" fill="none">
-                <path d="M16.552 10.6633L19.1572 11.8305L19.9706 9.09412C21.1279 5.20096 24.7492 2.5 28.8789 2.5C33.0086 2.5 36.63 5.20096 37.7872 9.09412L38.6006 11.8305L41.2058 10.6633C42.473 10.0955 43.779 9.80121 45.1128 9.80121C47.5895 9.80121 49.9596 10.775 51.7029 12.4999C53.4453 14.2239 54.4193 16.5566 54.4193 18.9832C54.4193 23.1313 51.5569 26.8 47.4385 27.8651L45.5644 28.3497V30.2854V48.6085H41.7096V46.7278V32.1253V29.6253H39.2096H36.258H33.758V32.1253V46.7278V48.6085H32.8547V46.7278V26.2844V23.7844H30.3547H27.4031H24.9031V26.2844V46.7278V48.6085H23.9999V46.7278V32.1253V29.6253H21.4999H18.5483H16.0483V32.1253V46.7278V48.6085H12.1934V30.2854V28.3477L10.3169 27.8644C8.31574 27.3491 6.54849 26.194 5.28799 24.5851L3.32004 26.1269L5.28799 24.5851C4.02857 22.9775 3.34479 21.0066 3.33856 18.9798C3.33947 16.5544 4.31336 14.2231 6.05497 12.4999C7.79828 10.775 10.1683 9.80121 12.645 9.80121C13.9789 9.80121 15.2848 10.0955 16.552 10.6633ZM12.1934 56.9495V56.529H45.5644V56.9495C45.5644 57.0524 45.5234 57.1565 45.4416 57.2374L47.1999 59.0146L45.4416 57.2375C45.3589 57.3193 45.2411 57.37 45.1128 57.37H12.645C12.5167 57.37 12.399 57.3193 12.3163 57.2375L10.5579 59.0146L12.3163 57.2374C12.2345 57.1565 12.1934 57.0524 12.1934 56.9495Z" fill="#AC8F75" stroke="#AC8F75" stroke-width="5"/>
-              </svg>
+                <path
+                    d="M16.552 10.6633L19.1572 11.8305L19.9706 9.09412C21.1279 5.20096 24.7492 2.5 28.8789 2.5C33.0086 2.5 36.63 5.20096 37.7872 9.09412L38.6006 11.8305L41.2058 10.6633C42.473 10.0955 43.779 9.80121 45.1128 9.80121C47.5895 9.80121 49.9596 10.775 51.7029 12.4999C53.4453 14.2239 54.4193 16.5566 54.4193 18.9832C54.4193 23.1313 51.5569 26.8 47.4385 27.8651L45.5644 28.3497V30.2854V48.6085H41.7096V46.7278V32.1253V29.6253H39.2096H36.258H33.758V32.1253V46.7278V48.6085H32.8547V46.7278V26.2844V23.7844H30.3547H27.4031H24.9031V26.2844V46.7278V48.6085H23.9999V46.7278V32.1253V29.6253H21.4999H18.5483H16.0483V32.1253V46.7278V48.6085H12.1934V30.2854V28.3477L10.3169 27.8644C8.31574 27.3491 6.54849 26.194 5.28799 24.5851L3.32004 26.1269L5.28799 24.5851C4.02857 22.9775 3.34479 21.0066 3.33856 18.9798C3.33947 16.5544 4.31336 14.2231 6.05497 12.4999C7.79828 10.775 10.1683 9.80121 12.645 9.80121C13.9789 9.80121 15.2848 10.0955 16.552 10.6633ZM12.1934 56.9495V56.529H45.5644V56.9495C45.5644 57.0524 45.5234 57.1565 45.4416 57.2374L47.1999 59.0146L45.4416 57.2375C45.3589 57.3193 45.2411 57.37 45.1128 57.37H12.645C12.5167 57.37 12.399 57.3193 12.3163 57.2375L10.5579 59.0146L12.3163 57.2374C12.2345 57.1565 12.1934 57.0524 12.1934 56.9495Z"
+                    fill="#AC8F75" stroke="#AC8F75" stroke-width="5" />
+            </svg>
             <p class="logoname">智慧廚師</p>
         </div>
         <div class="bar">
@@ -43,9 +47,89 @@
     </div>
 </body>
 <script>
-    const cancelbutton = document.getElementById('cancel-button'); // 顯示上傳的圖片
-    cancelbutton.addEventListener('click', function () {
+    let newsId; // 先聲明 newsId 變數
+    window.addEventListener('load', async function() {
+        try {
+            const response = await fetch(`http://localhost:5000/AICook/News/Get/${newsId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBSUNvb2tBZG1pbiIsImp0aSI6IjFlMDQzZTc4LTIyYWEtNGY3ZC04MDE1LTk0MWVmMThhNTkxMSIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjk3MDMwMDE5LCJleHAiOjE2OTcwMzE4MTksImlhdCI6MTY5NzAzMDAxOSwiaXNzIjoiQUlDb29rIn0.6XHqic2MTSkakTfuKu1kSxXG376HPCktYmdBrfY5dNs'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            const newsId = data.news_Id;
+            const newsTitle = data.news_Title;
+
+            document.getElementById('news_Id').value = newsId;
+            document.getElementById('news_Title').value = newsTitle;
+
+            const titleInput = document.getElementById('news_Title');
+            const contentInput = document.getElementById('news_Content');
+
+            titleInput.addEventListener('input', function() {
+                updateNews(newsId, titleInput.value, contentInput.value);
+            });
+
+            contentInput.addEventListener('input', function() {
+                updateNews(newsId, titleInput.value, contentInput.value);
+            });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+
+    function updateNews(newsId, title, content) {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBSUNvb2tBZG1pbiIsImp0aSI6IjFlMDQzZTc4LTIyYWEtNGY3ZC04MDE1LTk0MWVmMThhNTkxMSIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjk3MDMwMDE5LCJleHAiOjE2OTcwMzE4MTksImlhdCI6MTY5NzAzMDAxOSwiaXNzIjoiQUlDb29rIn0.6XHqic2MTSkakTfuKu1kSxXG376HPCktYmdBrfY5dNs");
+
+            const requestOptions = {
+                method: 'PUT',
+                headers: myHeaders,
+                body: JSON.stringify({
+                    "news_Id": newsId,
+                    "news_Title": title,
+                    "news_Content": content,
+                    "news_Top": true
+                }),
+                redirect: 'follow'
+            };
+
+            fetch(`http://localhost:5000/AICook/News/Update/${newsId}`, requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(result => {
+                    console.log(result);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // 顯示錯誤信息給用戶
+                    // 例如：alert('更新新聞失敗，請稍後再試。');
+                });
+        } catch (error) {
+            console.error('Error:', error);
+            // 顯示錯誤信息給用戶
+            // 例如：alert('更新新聞失敗，請稍後再試。');
+        }
+    }
+
+    const cancelbutton = document.getElementById('cancel-button');
+    cancelbutton.addEventListener('click', function(event) {
+        event.preventDefault();
         window.location.href = "SmartChef_Consoles.html";
-});
+    });
 </script>
+
+
 </html>
