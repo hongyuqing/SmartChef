@@ -35,8 +35,8 @@
 
 
 
-
-    <div class="TEdit-content">
+  <div class="TEdit-container">
+    <div class="TEdit-content" id="elementToDelete">
       <a href="#">
         <div class="learn-content-left">
           <div class="learn-stiker">
@@ -49,7 +49,7 @@
             <div class="fs1">簡述</div>
           </div>
         </div>
-        <div class="icon">
+        <div class="icon" id="icon" onclick="deleteElement(this)">
           <div class="icon-content-record">
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
               <path d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z" fill="#8CC051"/>
@@ -58,7 +58,7 @@
         </div>
       </a>
     </div>
-    <div class="TEdit-content">
+    <div class="TEdit-content" id="elementToDelete">
       <a href="#">
         <div class="learn-content-left">
           <div class="learn-stiker">
@@ -71,7 +71,7 @@
             <div class="fs1">簡述</div>
           </div>
         </div>
-        <div class="icon">
+        <div class="icon" id="icon" onclick="deleteElement(this)">
           <div class="icon-content-record">
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
               <path d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z" fill="#8CC051"/>
@@ -80,7 +80,7 @@
         </div>
       </a>
     </div>
-    <div class="TEdit-content">
+    <div class="TEdit-content" id="elementToDelete">
       <a href="#">
         <div class="learn-content-left">
           <div class="learn-stiker">
@@ -93,7 +93,7 @@
             <div class="fs1">簡述</div>
           </div>
         </div>
-        <div class="icon">
+        <div class="icon" id="icon" onclick="deleteElement(this)">
           <div class="icon-content-record">
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
               <path d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z" fill="#8CC051"/>
@@ -102,7 +102,7 @@
         </div>
       </a>
     </div>
-    <div class="TEdit-content">
+    <div class="TEdit-content" id="elementToDelete">
       <a href="#">
         <div class="learn-content-left">
           <div class="learn-stiker">
@@ -115,7 +115,7 @@
             <div class="fs1">簡述</div>
           </div>
         </div>
-        <div class="icon">
+        <div class="icon" id="icon" onclick="deleteElement(this)">
           <div class="icon-content-record">
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
               <path d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z" fill="#8CC051"/>
@@ -124,7 +124,7 @@
         </div>
       </a>
     </div>
-
+  </div>
 
 
 
@@ -178,5 +178,10 @@
       window.history.back();
   });
 </script>
-
+<script>
+  function deleteElement(clickedElement) {
+    var parentElement = clickedElement.parentElement.parentElement;
+    parentElement.remove();
+  }
+</script>
 </html>
