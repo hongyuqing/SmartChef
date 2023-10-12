@@ -38,10 +38,15 @@ body{
 }
 .Register-word{
     display: flex;
-    width: 96px;
+    width: 50px;
     flex-direction: column;
     justify-content: center;
-    
+}
+.Register-word2{
+    display: flex;
+    width: 30px;
+    flex-direction: column;
+    justify-content: center;
 }
 .Content_Convert{
     height: 730px;

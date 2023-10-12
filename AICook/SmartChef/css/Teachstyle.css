@@ -27,7 +27,7 @@ body{
 }
 .Register-word{
     display: flex;
-    width: 24px;
+    width: 50px;
     flex-direction: column;
     justify-content: center;
     
