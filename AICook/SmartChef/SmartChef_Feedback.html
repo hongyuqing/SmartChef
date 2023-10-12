@@ -52,9 +52,8 @@
 
             feedbackForm.addEventListener("submit", async function (e) {
                 e.preventDefault();
-                const accessToken = localStorage.getItem('accessToken');  // 從 localStorage 中獲取用戶的 accessToken
+                const accessToken = localStorage.getItem('accessToken');
 
-                // 檢查用戶是否已登入，如果未登入，則提示用戶並返回
                 if (!accessToken) {
                     alert("請先登入");
                     return;
@@ -84,7 +83,7 @@
 
                     const myHeaders = new Headers();
                     myHeaders.append("Content-Type", "application/json");
-                    myHeaders.append("Cookie", "AICookToken=123");
+                    myHeaders.append("Authorization", "Bearer " + accessToken);
 
                     const requestOptions = {
                         method: 'POST',
@@ -93,9 +92,9 @@
                         redirect: 'follow'
                     };
 
-                    const response = await fetch("http://localhost:5000/AICook/Feedback", requestOptions);
+                    const response = await fetch("http://localhost:5000/AICook/Feedback/InsertFeedback", requestOptions);
                     const result = await response.text();
-
+                    
                     console.log(result);
                     alert("新增成功");
                     window.location.href = "SmartChef_User.html";

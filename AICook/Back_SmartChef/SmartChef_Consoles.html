@@ -17,6 +17,10 @@
                     fill="#AC8F75" stroke="#AC8F75" stroke-width="5" />
             </svg>
             <p class="logoname">智慧廚師</p>
+            <div class="logout">
+                <a href="#" class="word" onclick="logout()" id="logoutButton">登出</a>
+            </div>
+
         </div>
         <div class="bar">
             <ul>
@@ -170,6 +174,98 @@
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", "Bearer " + accessToken);
 
+        async function deleteNews(newsId) {
+            try {
+                const response = await fetch(`http://localhost:5000/AICook/News/Delete/${newsId}`, {
+                    headers: myHeaders,
+                    method: 'DELETE',
+                    redirect: 'follow'
+                });
+
+                if (response.ok) {
+                    const result = await response.text();
+                    console.log('News deleted successfully:', result);
+                    location.reload();
+                } else {
+                    handleErrorResponse(response);
+                }
+            } catch (error) {
+                handleNetworkError(error);
+            }
+        }
+
+        async function handleEditNews(newsId) {
+            try {
+                const response = await fetchData(`http://localhost:5000/AICook/News/Get/${newsId}`, 'GET');
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('資料取得成功:', data);
+
+                    window.location.href = "SmartChef_EditNews.html";
+                } else {
+                    handleErrorResponse(response);
+                }
+            } catch (error) {
+                handleNetworkError(error);
+            }
+        }
+
+        async function fetchData(url, method) {
+            const response = await fetch(url, {
+                method: method,
+                headers: myHeaders,
+                redirect: 'follow'
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response;
+        }
+
+        function handleErrorResponse(response) {
+            response.text().then(errorText => {
+                console.error('Error. Status:', response.status, 'Error:', errorText);
+                alert('操作失敗，請稍後再試。');
+            });
+        }
+
+        function handleNetworkError(error) {
+            console.error('Network Error:', error);
+            alert('操作失敗，請稍後再試。');
+        }
+
+        document.querySelector('.news-table').addEventListener('click', function (event) {
+            const target = event.target;
+            if (target.classList.contains('delete')) {
+                event.preventDefault();
+                const confirmed = window.confirm('確定要刪除?');
+                if (confirmed) {
+                    const newsId = target.dataset.newsid;
+                    deleteNews(newsId);
+                }
+            } else if (target.classList.contains('Edit')) {
+                event.preventDefault();
+                const newsId = target.dataset.newsid;
+                handleEditNews(newsId);
+            }
+        });
+
+        async function getLatestNews() {
+            try {
+                const response = await fetchData("http://localhost:5000/AICook/News/GetList", 'GET');
+
+                if (response.ok) {
+                    const data = await response.json();
+                    displayLatestNews(data);
+                } else {
+                    handleErrorResponse(response);
+                }
+            } catch (error) {
+                handleNetworkError(error);
+            }
+        }
+
         function displayLatestNews(newsData) {
             var newsTable = document.querySelector('.news-table table');
 
@@ -183,32 +279,16 @@
                 dateCell.textContent = newsItem.news_UpdateTime.split('T')[0];
 
                 var editLink = document.createElement('a');
-                editLink.href = 'SmartChef_EditNews.html';
+                editLink.href = '#';
                 editLink.className = 'Edit';
                 editLink.textContent = '修改';
+                editLink.dataset.newsid = newsItem.news_Id;
 
                 var deleteLink = document.createElement('a');
                 deleteLink.href = '#';
                 deleteLink.className = 'delete';
                 deleteLink.textContent = '刪除';
-
-                if (newsItem.news_Id) {
-                    deleteLink.setAttribute('data-newsid', newsItem.news_Id);
-
-                    deleteLink.addEventListener('click', function (event) {
-                        event.preventDefault();
-                        var confirmed = window.confirm('確定要刪除?');
-                        if (confirmed) {
-                            var newsId = deleteLink.getAttribute('data-newsid');
-                            deleteNews(newsId);
-                        }
-                    });
-                } else {
-                    deleteLink.addEventListener('click', function (event) {
-                        event.preventDefault();
-                        console.error('Invalid newsId:', newsItem.newsId);
-                    });
-                }
+                deleteLink.dataset.newsid = newsItem.news_Id;
 
                 actionsCell.appendChild(editLink);
                 actionsCell.appendChild(document.createTextNode(' '));
@@ -216,37 +296,47 @@
             });
         }
 
-        async function deleteNews(newsId) {
-            try {
-                const response = await fetch(`http://localhost:5000/AICook/News/Delete/${newsId}`, {
-                    headers: myHeaders,
-                    method: 'DELETE',
-                    redirect: 'follow'
-                });
-
-                const result = await response.text();
-                console.log('News deleted successfully:', result);
-
-                location.reload();
-            } catch (error) {
-                console.error('Error deleting news:', error);
-            }
-        }
-
-        async function getLatestNews() {
-            try {
-                const response = await fetch("http://localhost:5000/AICook/News/GetList", {
-                    headers: myHeaders,
-                    redirect: 'follow'
-                });
-                const data = await response.json();
-                displayLatestNews(data);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-
         getLatestNews();
+        document.addEventListener("DOMContentLoaded", function () {
+        const logoutButton = document.getElementById('logoutButton');
+        logoutButton.addEventListener('click', function () {
+            const confirmLogout = confirm('確定要登出嗎？');
+
+            if (confirmLogout) {
+                logout();
+                console.log('登出成功');
+                window.location.href = "SmartChef_Login.html";
+            } 
+        });
+    });
+
+    async function logout() {
+        var accessToken = localStorage.getItem('accessToken');
+
+        if (!accessToken) {
+            alert("請先登入");
+            return;
+        }
+        else{
+          false;
+        }
+
+        try {
+            const response = await fetch("http://localhost:5000/AICook/Login", {
+                method: 'DELETE',
+                headers: {
+                    'Cookie': 'AICookToken=123'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('登出失敗');
+            }
+            localStorage.removeItem('accessToken');
+        } catch (error) {
+            console.error('發生錯誤:', error);
+        }
+    }
     </script>
 </body>
 
