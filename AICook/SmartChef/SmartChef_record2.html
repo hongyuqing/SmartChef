@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Chef - 學習紀錄2</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 </head>
 <body>
   <div class="body">
@@ -35,99 +38,109 @@
 
 
 
+<div class="record-container">
+  <div class="record-content" id="elementToDelete">
+    <div class="learn-content-left">
+      <div class="learn-stiker">
+        <img src="./images/圖片1.png" class="img-full" />
+      </div>
+    </div>
+    <div class="learn-content-right">
+      <div class="learn-content-text">
+        <div class="FS">蔥爆牛肉</div>
+        <div class="fs">廚神入化</div>
+        <div class="fs1">新增時間</div>
+      </div>
+    </div>
+    <a href="#">
+      <div class="icon" id="icon" onclick="confirmDelete(this)">
+        <div class="icon-content-record">
+          <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
+            <path
+              d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z"
+              fill="#5D9CEC" />
+          </svg>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="record-content" id="elementToDelete">
+    <div class="learn-content-left">
+      <div class="learn-stiker">
+        <img src="./images/圖片1.png" class="img-full" />
+      </div>
+    </div>
+    <div class="learn-content-right">
+      <div class="learn-content-text">
+        <div class="FS">蔥爆牛肉</div>
+        <div class="fs">廚神入化</div>
+        <div class="fs1">新增時間</div>
+      </div>
+    </div>
+    <a href="#">
+      <div class="icon" id="icon" onclick="confirmDelete(this)">
+        <div class="icon-content-record">
+          <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
+            <path
+              d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z"
+              fill="#5D9CEC" />
+          </svg>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="record-content" id="elementToDelete">
+    <div class="learn-content-left">
+      <div class="learn-stiker">
+        <img src="./images/圖片1.png" class="img-full" />
+      </div>
+    </div>
+    <div class="learn-content-right">
+      <div class="learn-content-text">
+        <div class="FS">蔥爆牛肉</div>
+        <div class="fs">廚神入化</div>
+        <div class="fs1">新增時間</div>
+      </div>
+    </div>
+    <a href="#">
+      <div class="icon" id="icon" onclick="confirmDelete(this)">
+        <div class="icon-content-record">
+          <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
+            <path
+              d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z"
+              fill="#5D9CEC" />
+          </svg>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="record-content" id="elementToDelete">
+    <div class="learn-content-left">
+      <div class="learn-stiker">
+        <img src="./images/圖片1.png" class="img-full" />
+      </div>
+    </div>
+    <div class="learn-content-right">
+      <div class="learn-content-text">
+        <div class="FS">蔥爆牛肉</div>
+        <div class="fs">廚神入化</div>
+        <div class="fs1">新增時間</div>
+      </div>
+    </div>
+    <a href="#">
+      <div class="icon" id="icon" onclick="confirmDelete(this)">
+        <div class="icon-content-record">
+          <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
+            <path
+              d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z"
+              fill="#5D9CEC" />
+          </svg>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
 
-    <div class="record-content">
-      <a href="#">
-        <div class="learn-content-left">
-          <div class="learn-stiker">
-            <img src="./images/圖片1.png" class="img-full" />
-          </div>
-        </div>
-        <div class="learn-content-right">
-          <div class="learn-content-text">
-            <div class="FS">蔥爆牛肉</div>
-            <div class="fs">廚神入化</div>
-            <div class="fs1">蔥、牛肉...</div>
-          </div>
-        </div>
-        <div class="icon">
-          <div class="icon-content-record">
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
-              <path d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z" fill="#5D9CEC"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="record-content">
-      <a href="#">
-        <div class="learn-content-left">
-          <div class="learn-stiker">
-            <img src="./images/圖片1.png" class="img-full" />
-          </div>
-        </div>
-        <div class="learn-content-right">
-          <div class="learn-content-text">
-            <div class="FS">蔥爆牛肉</div>
-            <div class="fs">廚神入化</div>
-            <div class="fs1">蔥、牛肉...</div>
-          </div>
-        </div>
-        <div class="icon">
-          <div class="icon-content-record">
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
-              <path d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z" fill="#5D9CEC"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="record-content">
-      <a href="#">
-        <div class="learn-content-left">
-          <div class="learn-stiker">
-            <img src="./images/圖片1.png" class="img-full" />
-          </div>
-        </div>
-        <div class="learn-content-right">
-          <div class="learn-content-text">
-            <div class="FS">蔥爆牛肉</div>
-            <div class="fs">廚神入化</div>
-            <div class="fs1">蔥、牛肉...</div>
-          </div>
-        </div>
-        <div class="icon">
-          <div class="icon-content-record">
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
-              <path d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z" fill="#5D9CEC"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-    </div>
-    <div class="record-content">
-      <a href="#">
-        <div class="learn-content-left">
-          <div class="learn-stiker">
-            <img src="./images/圖片1.png" class="img-full" />
-          </div>
-        </div>
-        <div class="learn-content-right">
-          <div class="learn-content-text">
-            <div class="FS">蔥爆牛肉</div>
-            <div class="fs">廚神入化</div>
-            <div class="fs1">蔥、牛肉...</div>
-          </div>
-        </div>
-        <div class="icon">
-          <div class="icon-content-record">
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="30" viewBox="0 0 23 30" fill="none">
-              <path d="M23 1.66667H17.25L15.6071 0H7.39286L5.75 1.66667H0V5H23M1.64286 26.6667C1.64286 27.5507 1.98903 28.3986 2.60522 29.0237C3.22141 29.6488 4.05715 30 4.92857 30H18.0714C18.9429 30 19.7786 29.6488 20.3948 29.0237C21.011 28.3986 21.3571 27.5507 21.3571 26.6667V6.66667H1.64286V26.6667Z" fill="#5D9CEC"/>
-            </svg>
-          </div>
-        </div>
-      </a>
-    </div>
 
 
 
@@ -182,4 +195,87 @@
       window.history.back();
   });
 </script>
+
+<!-- <script>
+  var deleteButton = document.getElementById("icon");
+  var elementToDelete = document.getElementById("elementToDelete");
+  deleteButton.addEventListener("click", function() {
+      // 检查要删除的元素是否存在
+      if (elementToDelete) {
+        // 从父元素中移除要删除的元素
+        elementToDelete.parentNode.removeChild(elementToDelete);
+      }
+  });
+</script>
+<script>
+  var deleteButton = document.getElementById("icon");
+  var elementToDelete = document.getElementById("elementToDelete");
+  function deleteElement(clickedElement) {
+    // 找到被点击元素的父元素
+    var parentElement = clickedElement.parentElement;
+
+    // 删除父元素
+    if (parentElement) {
+      parentElement.parentElement.removeChild(parentElement);
+    }
+  }
+</script> -->
+
+<!-- <script>
+  // 获取包含所有记录的容器
+  var container = document.getElementById("elementToDelete");
+
+  // 为容器添加点击事件处理程序，使用事件委托
+  container.addEventListener("click", function(event) {
+    if (event.target.classList.contains("icon-content-record")) {
+      // 找到被点击元素的父元素
+      var parentElement = event.target.parentElement.parentElement;
+
+      // 删除父元素
+      if (parentElement) {
+        parentElement.parentElement.removeChild(parentElement);
+      }
+    }
+  });
+</script> -->
+
+<!-- <script>
+  var container = document.querySelector(".record-container");
+
+  function deleteElement(element) {
+    if (element) {
+      element.parentElement.removeChild(element);
+      deleteElement(element);
+    }
+  }
+
+  container.addEventListener("click", function(event) {
+    if (event.target.classList.contains("icon-content-record")) {
+      var parentElement = event.target.parentElement.parentElement;
+      deleteElement(parentElement);
+    }
+  });
+</script> -->
+
+<script>
+  function confirmDelete(clickedElement) {
+    Swal.fire({
+      title: "是否刪除教程?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "確定",
+      cancelButtonText: "取消"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteElement(clickedElement);
+      }
+    });
+  }
+
+  function deleteElement(clickedElement) {
+    var parentElement = clickedElement.parentElement.parentElement;
+    parentElement.remove();
+  }
+</script>
+
 </html>

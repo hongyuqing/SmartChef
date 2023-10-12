@@ -49,6 +49,8 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    display: flex;
+    flex-direction: column;
 }
 .news-title{
     color: #000;
@@ -220,6 +222,7 @@ footer{
 .content img{
     width: 350px;
     height: 220px;
+    margin: auto;
 }
 .info{
     display: flex;
@@ -507,6 +510,7 @@ button{
 
 .user-up{
     display: flex;
+    justify-content: center;
 }
 .user-p{
     /* width: 150px;
@@ -565,6 +569,11 @@ button{
     justify-content: center;
     margin-right: 17px;
 }
+.record-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .record-content{
     background: rgba(168, 223, 244, 0.65);
     display: flex;
@@ -593,6 +602,11 @@ button{
     margin-left: 48px;
 }
 
+.TEdit-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .TEdit-content{
     background: rgba(223, 244, 168, 0.75);
     display: flex;
@@ -621,6 +635,11 @@ button{
     margin-left: 48px;
 }
 
+.Like-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .Like-content{
     background: rgba(245, 210, 216, 0.75);
     display: flex;
@@ -640,3 +659,9 @@ button{
 .Like-content a:hover {
     color: #000;
 }
+  
+  
+  
+  
+  
+  
