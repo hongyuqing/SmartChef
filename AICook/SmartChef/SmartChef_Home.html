@@ -110,71 +110,79 @@
     </div>
   </div>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      const BASE_URL = "http://localhost:5000/AICook/News/";
+      var accessToken = localStorage.getItem('accessToken');
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", "Bearer " + accessToken);
 
-</body>
-<script>
-document.addEventListener("DOMContentLoaded", async function () {
-  var accessToken = localStorage.getItem('accessToken');
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Authorization", "Bearer " + accessToken);
-
-  try {
-    var response = await fetch("http://localhost:5000/AICook/News/GetList", {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    var data = await response.json();
-    renderNews(data);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-
-  function renderNews(newsData) {
-    var newsList = document.querySelector('.news');
-    newsData.forEach(function (news) {
-      var newsItem = document.getElementById('news-' + news.news_Id);
-      if (newsItem) {
-        newsItem.textContent = news.news_Title;
-      } else {
-        var newNewsItem = document.createElement('li');
-        newNewsItem.id = 'news-' + news.news_Id;
-        newNewsItem.textContent = news.news_Title;
-        newsList.appendChild(newNewsItem);
-      }
-    });
-  }
-
-  document.querySelector('.news').addEventListener('click', async function (event) {
-    if (event.target.tagName === 'LI') {
-      var newsId = event.target.id.split('-')[1];
       try {
-        var response = await fetch(`http://localhost:5000/AICook/News/Get/${newsId}`, {
+        var response = await fetch(BASE_URL + "GetList", {
           method: 'GET',
           headers: myHeaders,
           redirect: 'follow'
         });
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error('Server error: ' + response.status);
         }
+
         var data = await response.json();
-        console.log(data);
+        renderNews(data);
       } catch (error) {
-        console.error('Error:', error);
+        if (error instanceof TypeError) {
+          console.error('Network error:', error.message);
+        } else {
+          console.error('Error:', error.message);
+        }
       }
-    }
-  });
-});
 
+      function renderNews(newsData) {
+        var newsList = document.querySelector('.news');
+        newsList.innerHTML = ''; // Clear the existing list before rendering
 
+        if (newsData.length === 0) {
+          var messageItem = document.createElement('li');
+          messageItem.textContent = 'No news available';
+          newsList.appendChild(messageItem);
+        } else {
+          newsData.forEach(function (news) {
+            var newsItem = document.createElement('li');
+            newsItem.id = 'news-' + news.news_Id;
+            newsItem.textContent = news.news_Title;
+            newsList.appendChild(newsItem);
+          });
+        }
+      }
 
-</script>
+      document.querySelector('.news').addEventListener('click', async function (event) {
+        if (event.target.tagName === 'LI') {
+          var newsId = event.target.id.split('-')[1];
+          try {
+            var response = await fetch(BASE_URL + `Get/${newsId}`, {
+              method: 'GET',
+              headers: myHeaders,
+              redirect: 'follow'
+            });
+
+            if (!response.ok) {
+              throw new Error('Server error: ' + response.status);
+            }
+            var data = await response.json();
+            console.log(data);
+          } catch (error) {
+            if (error instanceof TypeError) {
+              console.error('Network error:', error.message);
+            } else {
+              console.error('Error:', error.message);
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
 
 </html>

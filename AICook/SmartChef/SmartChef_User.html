@@ -159,7 +159,6 @@
     });
 
     async function logout() {
-        // 檢查本地存儲中是否有令牌
         var accessToken = localStorage.getItem('accessToken');
 
         if (!accessToken) {

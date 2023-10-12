@@ -63,6 +63,18 @@ header{
     margin: 0px 2px;
     border-bottom: 4px solid #AB8383;
 }
+.logout{
+    width: 100%;
+    border-radius: 20px;
+    background-color: #6D4C2F;
+}
+.logout a{
+    color: #fff;
+}
+.logout:hover{
+    background-color: #AC8F75;
+}
+
 /*----------------------------------------------CONTENT----------------------------------------------*/
 .content{
     display: flex;

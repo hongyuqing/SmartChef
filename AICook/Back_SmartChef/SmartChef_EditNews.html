@@ -45,91 +45,96 @@
             </div>
         </form>
     </div>
-</body>
-<script>
-    let newsId; // 先聲明 newsId 變數
-    window.addEventListener('load', async function() {
-        try {
-            const response = await fetch(`http://localhost:5000/AICook/News/Get/${newsId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBSUNvb2tBZG1pbiIsImp0aSI6IjFlMDQzZTc4LTIyYWEtNGY3ZC04MDE1LTk0MWVmMThhNTkxMSIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjk3MDMwMDE5LCJleHAiOjE2OTcwMzE4MTksImlhdCI6MTY5NzAzMDAxOSwiaXNzIjoiQUlDb29rIn0.6XHqic2MTSkakTfuKu1kSxXG376HPCktYmdBrfY5dNs'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-            const newsId = data.news_Id;
-            const newsTitle = data.news_Title;
-
-            document.getElementById('news_Id').value = newsId;
-            document.getElementById('news_Title').value = newsTitle;
-
-            const titleInput = document.getElementById('news_Title');
-            const contentInput = document.getElementById('news_Content');
-
-            titleInput.addEventListener('input', function() {
-                updateNews(newsId, titleInput.value, contentInput.value);
-            });
-
-            contentInput.addEventListener('input', function() {
-                updateNews(newsId, titleInput.value, contentInput.value);
-            });
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    });
-
-    function updateNews(newsId, title, content) {
-        try {
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBSUNvb2tBZG1pbiIsImp0aSI6IjFlMDQzZTc4LTIyYWEtNGY3ZC04MDE1LTk0MWVmMThhNTkxMSIsInJvbGUiOiJVc2VyIiwibmJmIjoxNjk3MDMwMDE5LCJleHAiOjE2OTcwMzE4MTksImlhdCI6MTY5NzAzMDAxOSwiaXNzIjoiQUlDb29rIn0.6XHqic2MTSkakTfuKu1kSxXG376HPCktYmdBrfY5dNs");
-
-            const requestOptions = {
-                method: 'PUT',
-                headers: myHeaders,
-                body: JSON.stringify({
-                    "news_Id": newsId,
-                    "news_Title": title,
-                    "news_Content": content,
-                    "news_Top": true
-                }),
-                redirect: 'follow'
-            };
-
-            fetch(`http://localhost:5000/AICook/News/Update/${newsId}`, requestOptions)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(result => {
-                    console.log(result);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // 顯示錯誤信息給用戶
-                    // 例如：alert('更新新聞失敗，請稍後再試。');
+    <script>
+        var accessToken = localStorage.getItem('accessToken');
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Bearer " + accessToken);
+    
+        const urlParams = new URLSearchParams(window.location.search);
+        const newsId = urlParams.get('newsId');
+    
+        // 確認newsId是否正確獲取
+        console.log('newsId:', newsId);
+    
+        window.addEventListener('load', async function () {
+            try {
+                const response = await fetch(`http://localhost:5000/AICook/News/Get/${newsId}`, {
+                    method: 'GET',
+                    headers: myHeaders
                 });
-        } catch (error) {
-            console.error('Error:', error);
-            // 顯示錯誤信息給用戶
-            // 例如：alert('更新新聞失敗，請稍後再試。');
+    
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+    
+                const data = await response.json();
+                const newsTitle = data.news_Title;
+    
+                document.getElementById('news_Id').value = newsId;
+                document.getElementById('news_Title').value = newsTitle;
+    
+                const titleInput = document.getElementById('news_Title');
+                const contentInput = document.getElementById('news_Content');
+    
+                titleInput.addEventListener('input', function () {
+                    updateNews(newsId, titleInput.value, contentInput.value);
+                });
+    
+                contentInput.addEventListener('input', function () {
+                    updateNews(newsId, titleInput.value, contentInput.value);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    
+        function updateNews(newsId, title, content) {
+            try {
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                myHeaders.append("Authorization", "Bearer " + accessToken);
+    
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: myHeaders,
+                    body: JSON.stringify({
+                        "news_Id": newsId,
+                        "news_Title": title,
+                        "news_Content": content,
+                        "news_Top": true
+                    }),
+                    redirect: 'follow'
+                };
+    
+                fetch(`http://localhost:5000/AICook/News/Update/${newsId}`, requestOptions)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(result => {
+                        console.log(result);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // 顯示錯誤信息給用戶
+                        // 例如：alert('更新新聞失敗，請稍後再試。');
+                    });
+            } catch (error) {
+                console.error('Error:', error);
+                // 顯示錯誤信息給用戶
+                // 例如：alert('更新新聞失敗，請稍後再試。');
+            }
         }
-    }
-
-    const cancelbutton = document.getElementById('cancel-button');
-    cancelbutton.addEventListener('click', function(event) {
-        event.preventDefault();
-        window.location.href = "SmartChef_Consoles.html";
-    });
-</script>
-
-
+    
+        const cancelbutton = document.getElementById('cancel-button');
+        cancelbutton.addEventListener('click', function (event) {
+            event.preventDefault();
+            window.location.href = "SmartChef_Consoles.html";
+        });
+    
+    </script>
+</body>
 </html>
