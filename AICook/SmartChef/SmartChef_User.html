@@ -45,7 +45,7 @@
         </div> -->
     </div>
       <div class="UserName">
-        <p>User</p>
+        <div class="username"></div>
         <a href="SmartChef_UserEdit.html" class="pen">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path
@@ -186,7 +186,97 @@
     }
 </script>
 
+<script>
+  // document.addEventListener("DOMContentLoaded", async function () {
+  //   const BASE_URL = "http://localhost:5000/AICook/Member/";
+  //   var accessToken = localStorage.getItem('accessToken');
 
+  //   var myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/json");
+  //   myHeaders.append("Authorization", "Bearer " + accessToken);
+
+  //   if (event.target.tagName === 'P') {
+  //     var usernameId = event.target.id.split('-')[1];
+  //     try {
+  //       var response = await fetch(BASE_URL + `AnnouncerPersonal/${usernameId}`, {
+  //         method: 'GET',
+  //         headers: myHeaders,
+  //         redirect: 'follow'
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error('Server error: ' + response.status);
+  //       }
+
+  //       var data = await response.json();
+  //       renderNews(data);
+  //     }
+  //     catch (error) {
+  //       if (error instanceof TypeError) {
+  //         console.error('Network error:', error.message);
+  //       } else {
+  //         console.error('Error:', error.message);
+  //       }
+  //     }
+  //   }
+  //   function renderNews(newsData) {
+  //     var usernameList = document.querySelector('.UserName');
+  //     var newsItem = document.getElementById('username');
+  //     newsItem.textContent = newsData.member_UserName;
+  //     usernameList.appendChild(newsItem);
+  //     // var UserPhoto = document.getElementById('circle');
+  //     // UserPhoto.setAttribute('src', newsData.member_Photo);
+  //     // usernameList.appendChild(newsItem,UserPhoto);
+  //   };
+  // });
+
+document.addEventListener("DOMContentLoaded", async function () {
+  const BASE_URL = "http://localhost:5000/AICook/Member/";
+  var accessToken = localStorage.getItem('accessToken');
+  var recipeData = localStorage.getItem('recipeData');
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", "Bearer " + accessToken);
+
+  // var userId = event.target.id.split('-')[1];
+  try {
+    var response = await fetch(BASE_URL + "AnnouncerPersonal/1", {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    });
+
+    if (!response.ok) {
+      throw new Error('Server error: ' + response.status);
+    }
+
+    var data = await response.json();
+    renderNews(data);
+  }
+  catch (error) {
+    if (error instanceof TypeError) {
+      console.error('Network error:', error.message);
+    } else {
+      console.error('Error:', error.message);
+    }
+  }
+
+  function renderNews(newsData) {
+    var usernameList = document.querySelector('.username');
+    // 創建一個新的元素來顯示使用者的資訊
+    var newsItem = document.createElement('p');
+    newsItem.textContent = newsData.member_UserName;
+    usernameList.appendChild(newsItem);
+    // var circle = document.querySelector('.circle');
+    // var photo = document.createElement('img');
+    // photo.src = recipeData.image;
+    // usernameList.appendChild(photo);
+  }
+});
+
+
+</script>
 
   
   

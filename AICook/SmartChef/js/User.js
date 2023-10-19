@@ -1,7 +1,9 @@
 let inputData = {};
 
 document.addEventListener('DOMContentLoaded', function () {
+
     const textField1 = document.getElementById('textField1');
+
     // const textField2 = document.getElementById('textField2');
     const fileInput = document.getElementById('file-input');
     const uploadedImage = document.getElementById('uploaded-image');
@@ -10,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 檢查本機存放區中是否有之前保存的表單數據
     const savedData = JSON.parse(localStorage.getItem('recipeData')) || {};
     if (savedData) {
-        textField1.value = savedData.User_Name || '';
+        textField1.value = savedData.NewName || '';
         // textField2.value = savedData.food_Description || '';
         uploadedImage.src = savedData.image || '';
     }
@@ -37,18 +39,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 保存使用者輸入的資料
         inputData = {
-            User_Name: textField1.value,
+            NewName: textField1.value,
             // food_Description: textField2.value,
             image: savedData.image || '',
         };
 
         // 將資料輸出到控制台
-        console.log('User_Name:', inputData.User_Name);
+        console.log('member_UserName:', inputData.NewName);
         // console.log('food_Description:', inputData.food_Description);
-        console.log('User_Photo:', inputData.image);
+        console.log('member_Photo:', inputData.image);
 
         // 跳轉到下一頁
         window.location.href = btn.href;
     });
 });
+
+
+// 修改資料欄位名稱
+// 修改在第53行(復原 --> 拿掉註解)
 
