@@ -30,11 +30,11 @@
         <div class="Content_Convert">
             <div class="custom-select">
                 <select id="feedback-category">
-                    <option value="1">系統介面</option>
+                    <!-- <option value="1">系統介面</option>
                     <option value="2">教程教學</option>
                     <option value="3">辨識功能</option>
                     <option value="4">AI轉換(搜圖功能)</option>
-                    <option value="5">其他</option>
+                    <option value="5">其他</option> -->
                 </select>
             </div>
             <textarea rows="22" cols="32" id="feedback-content" placeholder="撰寫反饋..."></textarea>
@@ -50,6 +50,30 @@
             const textareaElement = document.getElementById("feedback-content");
             const submitButton = document.getElementById("submit-button");
 
+            const accessToken = localStorage.getItem('accessToken');
+
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Bearer " + accessToken);
+
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:5000/AICook/Feedback/FeedbackTargetList", requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(category => {
+                        const option = document.createElement("option");
+                        option.value = category.feedback_Target;
+                        option.text = category.feedback_TargetName;
+                        selectElement.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('錯誤:', error));
+
             feedbackForm.addEventListener("submit", async function (e) {
                 e.preventDefault();
                 const accessToken = localStorage.getItem('accessToken');
@@ -58,7 +82,7 @@
                     alert("請先登入");
                     return;
                 }
-                
+
                 const selectedOption = selectElement.value;
                 const feedbackText = textareaElement.value;
 
@@ -94,7 +118,7 @@
 
                     const response = await fetch("http://localhost:5000/AICook/Feedback/InsertFeedback", requestOptions);
                     const result = await response.text();
-                    
+
                     console.log(result);
                     alert("新增成功");
                     window.location.href = "SmartChef_User.html";
@@ -108,11 +132,13 @@
                 }
             });
         });
+
+        document.getElementById("back").addEventListener("click", function () {
+            window.history.back();
+        });
+
+
     </script>
 </body>
-<script>
-    document.getElementById("back").addEventListener("click", function() {
-        window.history.back();
-    });
-</script>
+
 </html>

@@ -119,6 +119,16 @@
       myHeaders.append("Authorization", "Bearer " + accessToken);
 
       try {
+        var raw = JSON.stringify([
+        {
+          "news_Id": 0,
+          "news_Title": "string",
+          "news_Content": "string",
+          "news_UpdateTime": "2023-10-04T07:31:16.574Z",
+          "news_Top": true
+        }
+      ]);
+
         var response = await fetch(BASE_URL + "GetList", {
           method: 'GET',
           headers: myHeaders,

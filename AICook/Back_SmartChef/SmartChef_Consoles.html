@@ -202,7 +202,8 @@
                     const data = await response.json();
                     console.log('資料取得成功:', data);
 
-                    window.location.href = "SmartChef_EditNews.html";
+                    // window.location.href = "SmartChef_EditNews.html";
+                    
                 } else {
                     handleErrorResponse(response);
                 }
@@ -324,11 +325,8 @@
         try {
             const response = await fetch("http://localhost:5000/AICook/Login", {
                 method: 'DELETE',
-                headers: {
-                    'Cookie': 'AICookToken=123'
-                }
+                headers: myHeaders
             });
-
             if (!response.ok) {
                 throw new Error('登出失敗');
             }
