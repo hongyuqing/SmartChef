@@ -37,71 +37,35 @@
         </div>
       </div>
     </div>
-  
-    <div class="content">
-      <img src="images/1.png">
-      <div class="info">
-        <div class="dish">蔥爆牛肉</div>
-        <div class="start">
-          <a href="SmartChef_Start.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="82" height="51" viewBox="0 0 82 51" fill="none">
-              <g filter="url(#filter0_d_129_238)">
-                <rect x="4" width="74" height="43" rx="21.5" fill="#AC8F75" />
-              </g>
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M32 14.0474L34.2898 13L50 21.9517V24.0466L34.2898 33L32 31.9526V14.0474ZM34.9457 16.3991V29.5992L46.528 22.9992L34.9457 16.3991Z"
-                fill="#6D4C2F" />
-              <defs>
-                <filter id="filter0_d_129_238" x="0" y="0" width="82" height="51" filterUnits="userSpaceOnUse"
-                  color-interpolation-filters="sRGB">
-                  <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha" />
-                  <feOffset dy="4" />
-                  <feGaussianBlur stdDeviation="2" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_129_238" />
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_129_238" result="shape" />
-                </filter>
-              </defs>
-            </svg>
-          </a>
-        </div>
-      </div>
-      <div class="name"><a href="SmartChef_Info.html">廚神入化</a></div>
-      <div class="name1">食材</div>
-      <div class="mm">
+
+    <div class="content" id="recipe-content">
+      <div class="dish"></div>
+      <div class="description"></div>
+      
+      <div class="ingredients">
+        <h2>食材</h2>
         <ul>
-          <li>澳洲牛里肌肉片 600克</li>
-          <li>青蔥 4根</li>
-          <li>蒜瓣 3辦</li>
-          <li>辣椒 1/2根</li>
-          <li>素蠔油 1小匙</li>
-          <li>油 1.5小匙</li>
-          <li>水或米酒 3大匙</li>
-          <li>白胡椒粉 1小匙</li>
-          <li>黑胡椒粒 1/2小匙</li>
-          <li>素蠔油 1/2大匙</li>
+          <!-- 食材列表 -->
         </ul>
       </div>
-      <hr>
-      <div class="name1">步驟</div>
-      <div class="nn">
-        <ol>
-          <li>牛排肉切片，用醃料抓醃10分鐘</li>
-          <li>蔥切小段、大蒜切碎、辣椒切片</li>
-          <li>放少許油熱鍋，小火煸香蔥白，將蔥白煎至微焦香</li>
-          <li>把蔥推一旁，補點油爆香大蒜、辣椒</li>
-          <li>接著放入醃牛肉拌炒，加一點水炒至5分熟</li>
-          <li>接著加入蔥段快炒</li>
-          <li>起鍋前加入少許醬油調味</li>
-        </ol>
+      
+      <div class="seasoning">
+        <h2>調味料</h2>
+        <ul>
+          <!-- 调味料列表 -->
+        </ul>
       </div>
+      
+      <div class="steps">
+        <h2>料理步驟</h2>
+        <ol>
+          <!-- 制作步骤列表 -->
+        </ol>
+      </div>      
     </div>
     <div class="D"></div>
-  
-  
+
+
     <!-- <footer>
       <div class="home">
         <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 35 35" fill="none">
@@ -147,8 +111,94 @@
 
 </body>
 <script>
-  document.getElementById("back").addEventListener("click", function() {
-      window.history.back();
+  // 返回
+  document.getElementById("back").addEventListener("click", function () {
+    window.history.back();
   });
+
+  // 取得Cook_Id的資料資料
+  document.addEventListener("DOMContentLoaded", async function () {
+    // 從URL提取Cook_Id
+    const urlParams = new URLSearchParams(window.location.search);
+    const cookId = urlParams.get("cook_id");
+
+    if (cookId) {
+      // 使用取得Cook_Id的資料
+      const BASE_URL = "http://localhost:5000/AICook/Cook/";
+      var accessToken = localStorage.getItem('accessToken');
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", "Bearer " + accessToken);
+
+      try {
+        var response = await fetch(BASE_URL + `GetDataById?Cook_Id=${cookId}`, {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        });
+
+        if (!response.ok) {
+          throw new Error('Server error: ' + response.status);
+        }
+
+        var data = await response.json();
+        renderData(data);
+      } catch (error) {
+        if (error instanceof TypeError) {
+          console.error('Network error:', error.message);
+        } else {
+          console.error('Error:', error.message);
+        }
+      }
+    }
+  });
+
+  // 套用CSS
+  function renderData(apiData) {
+    const container = document.querySelector('.content');
+
+    // 检查 apiData 中是否有菜谱数据
+    if (apiData && apiData.cook) {
+      // 更新菜谱名称和描述
+      const dishName = container.querySelector('.dish');
+      dishName.textContent = apiData.cook.cook_Name;
+
+      const dishDescription = container.querySelector('.description');
+      dishDescription.textContent = apiData.cook.cook_Description;
+
+      // 更新食材列表
+      const ingredientsList = container.querySelector('.ingredients ul');
+      ingredientsList.innerHTML = ''; // 清空现有的列表
+
+      apiData.list_Food.forEach((food) => {
+        const li = document.createElement('li');
+        li.textContent = food.food_Name;
+        ingredientsList.appendChild(li);
+      });
+
+      // 更新调味料列表
+      const seasoningList = container.querySelector('.seasoning ul');
+      seasoningList.innerHTML = ''; // 清空现有的列表
+
+      apiData.list_Seasoning.forEach((seasoning) => {
+        const li = document.createElement('li');
+        li.textContent = seasoning.seasoning_Name;
+        seasoningList.appendChild(li);
+      });
+
+      // 更新制作步骤列表
+      const stepsList = container.querySelector('.steps ol');
+      stepsList.innerHTML = ''; // 清空现有的列表
+
+      apiData.list_Step.forEach((step) => {
+        const li = document.createElement('li');
+        li.textContent = step.step_Description;
+        stepsList.appendChild(li);
+      });
+    }
+  }
+
+
 </script>
+
 </html>

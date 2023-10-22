@@ -79,6 +79,7 @@
   
   <!--script-->
   <script>
+    // 連接料理列表
     document.addEventListener("DOMContentLoaded", async function () {
     const BASE_URL = "http://localhost:5000/AICook/Cook/";
     var accessToken = localStorage.getItem('accessToken');
@@ -124,13 +125,14 @@
       }
     });
 
+    // 套用CSS
     function renderData(apiData) {
       const container = document.querySelector('.learn-body');
       container.innerHTML = '';
 
       apiData.forEach(item => {
         const link = document.createElement('a');
-        link.href = 'SmartChef_Cook.html';
+        link.href = 'SmartChef_Cook.html?id=' + item.cook_Id;
         
         const Content = document.createElement('div');
         Content.className = 'learn-content';
@@ -151,13 +153,13 @@
         textContent.className = 'learn-content-text';
         const title = document.createElement('div');
         title.className = 'FS';
-        title.textContent = item.cook_Name; // 使用正确的属性名称
+        title.textContent = item.cook_Name;
         const category = document.createElement('div');
         category.className = 'fs';
-        category.textContent = item.cook_Description; // 使用正确的属性名称
+        category.textContent = item.cook_Description;
         const dateAdded = document.createElement('div');
         dateAdded.className = 'fs1';
-        dateAdded.textContent = '新增时间：' + item.cook_UpdateTime; // 使用正确的属性名称
+        dateAdded.textContent = '新增时间：' + item.cook_UpdateTime;
         textContent.appendChild(title);
         textContent.appendChild(category);
         textContent.appendChild(dateAdded);
