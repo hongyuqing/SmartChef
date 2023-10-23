@@ -16,6 +16,7 @@
 
 <body>
   <div class="body1">
+    <!--Header-->
     <div class="L"></div>
     <div>
       <div class="Register2">
@@ -38,30 +39,73 @@
       </div>
     </div>
 
-    <div class="content" id="recipe-content">
-      <div class="dish"></div>
-      <div class="description"></div>
-      
-      <div class="ingredients">
-        <h2>食材</h2>
-        <ul>
-          <!-- 食材列表 -->
-        </ul>
+    <!--Content-->
+    <div class="content">
+      <!--料理教程圖片-->
+      <img src="images/1.png">
+      <div class="info">
+        <div class="dish"></div>
+        <div class="start">
+          <!--開始教程-->
+          <a href="#" id="startTutorialButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="82" height="51" viewBox="0 0 82 51" fill="none">
+              <g filter="url(#filter0_d_129_238)">
+                <rect x="4" width="74" height="43" rx="21.5" fill="#AC8F75" />
+              </g>
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M32 14.0474L34.2898 13L50 21.9517V24.0466L34.2898 33L32 31.9526V14.0474ZM34.9457 16.3991V29.5992L46.528 22.9992L34.9457 16.3991Z"
+                fill="#6D4C2F" />
+              <defs>
+                <filter id="filter0_d_129_238" x="0" y="0" width="82" height="51" filterUnits="userSpaceOnUse"
+                  color-interpolation-filters="sRGB">
+                  <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    result="hardAlpha" />
+                  <feOffset dy="4" />
+                  <feGaussianBlur stdDeviation="2" />
+                  <feComposite in2="hardAlpha" operator="out" />
+                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_129_238" />
+                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_129_238" result="shape" />
+                </filter>
+              </defs>
+            </svg>
+          </a>
+        </div>
       </div>
-      
-      <div class="seasoning">
-        <h2>調味料</h2>
-        <ul>
-          <!-- 调味料列表 -->
-        </ul>
-      </div>
-      
-      <div class="steps">
-        <h2>料理步驟</h2>
+      <!--會員名稱-->
+      <div class="name"><a href="SmartChef_Info.html">廚神入化</a></div>
+      <!--料理描述-->
+      <div class="name1 description">料理描述</div>
+      <div class="mm"></div>
+      <hr>
+      <!--食材列表-->
+      <div class="name1">食材</div>
+      <div class="mm food">
         <ol>
-          <!-- 制作步骤列表 -->
         </ol>
-      </div>      
+      </div>
+      <hr>
+      <!--調味料列表-->
+      <div class="name1">調味料</div>
+      <div class="mm seasoning">
+        <ol>
+        </ol>
+      </div>
+      <hr>
+      <!--食材處理-->
+      <div class="name1">食材處理</div>
+      <div class="nn processing">
+        <ol>
+        </ol>
+      </div>
+      <hr>
+      <!--步驟-->
+      <div class="name1">步驟</div>
+      <div class="nn step">
+        <ol>
+        </ol>
+      </div>
     </div>
     <div class="D"></div>
 
@@ -108,97 +152,105 @@
     </footer> -->
   </div>
 
+  <script>
+    // 返回
+    document.getElementById("back").addEventListener("click", function () {
+      window.history.back();
+    });
 
-</body>
-<script>
-  // 返回
-  document.getElementById("back").addEventListener("click", function () {
-    window.history.back();
-  });
+    // 取得Cook_Id的資料資料
+    document.addEventListener("DOMContentLoaded", async function () {
+      // 從URL提取Cook_Id
+      const urlParams = new URL(location.href);
+      const cookId = urlParams.searchParams.get('id');
+      if (cookId) {
+        // 使用取得Cook_Id的資料
+        const BASE_URL = "http://localhost:5000/AICook/Cook/";
+        var accessToken = localStorage.getItem('accessToken');
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Bearer " + accessToken);
 
-  // 取得Cook_Id的資料資料
-  document.addEventListener("DOMContentLoaded", async function () {
-    // 從URL提取Cook_Id
-    const urlParams = new URLSearchParams(window.location.search);
-    const cookId = urlParams.get("cook_id");
+        try {
+          var response = await fetch(BASE_URL + `GetDataById?Cook_Id=${cookId}`, {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+          });
 
-    if (cookId) {
-      // 使用取得Cook_Id的資料
-      const BASE_URL = "http://localhost:5000/AICook/Cook/";
-      var accessToken = localStorage.getItem('accessToken');
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", "Bearer " + accessToken);
+          if (!response.ok) {
+            throw new Error('Server error: ' + response.status);
+          }
 
-      try {
-        var response = await fetch(BASE_URL + `GetDataById?Cook_Id=${cookId}`, {
-          method: 'GET',
-          headers: myHeaders,
-          redirect: 'follow'
-        });
+          var data = await response.json();
 
-        if (!response.ok) {
-          throw new Error('Server error: ' + response.status);
-        }
-
-        var data = await response.json();
-        renderData(data);
-      } catch (error) {
-        if (error instanceof TypeError) {
-          console.error('Network error:', error.message);
-        } else {
-          console.error('Error:', error.message);
+          renderData(data);
+        } catch (error) {
+          if (error instanceof TypeError) {
+            console.error('Network error:', error.message);
+          } else {
+            console.error('Error:', error.message);
+          }
         }
       }
-    }
-  });
+    });
 
-  // 套用CSS
-  function renderData(apiData) {
-    const container = document.querySelector('.content');
-
-    // 检查 apiData 中是否有菜谱数据
-    if (apiData && apiData.cook) {
-      // 更新菜谱名称和描述
+    // 套用CSS
+    function renderData(apiData) {
+      const container = document.querySelector('.content');
+      // 料理名稱
       const dishName = container.querySelector('.dish');
       dishName.textContent = apiData.cook.cook_Name;
 
+      // 料理描述
       const dishDescription = container.querySelector('.description');
       dishDescription.textContent = apiData.cook.cook_Description;
 
-      // 更新食材列表
-      const ingredientsList = container.querySelector('.ingredients ul');
-      ingredientsList.innerHTML = ''; // 清空现有的列表
+      // 開啟教程按鈕
+      const startTutorialButton = document.getElementById("startTutorialButton");
+      const cookId = apiData.cook.cook_Id;
+      const newURL = `./SmartChef_Start.html?id=${cookId}`;
+      startTutorialButton.href = newURL;
 
+      // 食材列表
+      const ingredientsList = container.querySelector('.food ol');
+      ingredientsList.innerHTML = ''; // 清空現有資料
       apiData.list_Food.forEach((food) => {
         const li = document.createElement('li');
         li.textContent = food.food_Name;
         ingredientsList.appendChild(li);
       });
 
-      // 更新调味料列表
-      const seasoningList = container.querySelector('.seasoning ul');
-      seasoningList.innerHTML = ''; // 清空现有的列表
-
+      // 調味料列表
+      const seasoningList = container.querySelector('.seasoning ol');
+      seasoningList.innerHTML = ''; // 清空現有資料
       apiData.list_Seasoning.forEach((seasoning) => {
         const li = document.createElement('li');
         li.textContent = seasoning.seasoning_Name;
         seasoningList.appendChild(li);
       });
 
-      // 更新制作步骤列表
-      const stepsList = container.querySelector('.steps ol');
-      stepsList.innerHTML = ''; // 清空现有的列表
+      // 食材處理列表
+      const processingList = container.querySelector('.processing ol');
+      processingList.innerHTML = ''; // 清空現有資料
+      apiData.list_Processing.forEach((processing) => {
+        const li = document.createElement('li');
+        console.log(processing.processing_Description);
+        li.textContent = processing.processing_Description;
+        processingList.appendChild(li);
+      });
 
+      // 步驟列表
+      const stepsList = container.querySelector('.step ol');
+      stepsList.innerHTML = ''; // 清空現有資料
       apiData.list_Step.forEach((step) => {
         const li = document.createElement('li');
         li.textContent = step.step_Description;
         stepsList.appendChild(li);
       });
     }
-  }
+  </script>
 
-
-</script>
+</body>
 
 </html>
