@@ -66,15 +66,21 @@
       const urlParams = new URL(location.href);
       const cookId = urlParams.searchParams.get('id');
       let stepNumber = 1; // 步驟初始值
+
+      // 获取下一步按钮
+      const nextStepButton = document.getElementById("nextStepButton");
+
       // 判斷是否有Cook_Id
       if (cookId) {
-          // 使用取得Cook_Id的資料
-          const BASE_URL = "http://localhost:5000/AICook/Cook/";
-          var accessToken = localStorage.getItem('accessToken');
-          var myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-          myHeaders.append("Authorization", "Bearer " + accessToken);
+        // 使用取得Cook_Id的資料
+        const BASE_URL = "http://localhost:5000/AICook/Cook/";
+        var accessToken = localStorage.getItem('accessToken');
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Bearer " + accessToken);
 
+        // 用於獲取並渲染下一步數據的函數
+        async function fetchAndRenderNextStep() {
           try {
             var response = await fetch(BASE_URL + `${cookId}/Teach/StartCook/${stepNumber}`, {
               method: 'GET',
@@ -83,24 +89,33 @@
             });
 
             if (!response.ok) {
-              throw new Error('Server error: ' + response.status);
-            }
+            throw new Error('Server error: ' + response.status);
+          }
 
             var data = await response.json();
             renderData(data, stepNumber);
           } catch (error) {
             if (error instanceof TypeError) {
-              console.error('Network error:', error.message);
+              console.error('網絡錯誤:', error.message);
             } else {
-              console.error('Error:', error.message);
+              console.error('錯誤:', error.message);
             }
           }
         }
-      // 下一步
-      nextStepButton.addEventListener("click", async function () {
-        stepNumber++;
-      });
+
+        // 初始的數據獲取和渲染
+        fetchAndRenderNextStep();
+
+        // 下一步按鈕的點擊事件
+        nextStepButton.addEventListener("click", async function () {
+          stepNumber++;
+
+          // 獲取並渲染下一步數據
+          fetchAndRenderNextStep();
+        });
+      }
     });
+
     // 取得Cook_Id的資料資料
     document.addEventListener("DOMContentLoaded", async function () {
       // 從URL提取Cook_Id
@@ -148,7 +163,7 @@
     // 套用其他資訊
     function renderData(apiData, stepNumber) {
       console.log(apiData);
-      const container = document.querySelector('.content'); 
+      const container = document.querySelector('.content');
       // 料理圖片
       const dishPic = document.getElementById('pic');
       // if (stepNumber >= 3 && stepNumber <= (apiData.list_Processing.length + 3)) {
@@ -174,43 +189,7 @@
         dishStep.textContent = apiData.step_Description;
       }
     };
-    
-    // ProcessingCount
-    document.addEventListener("DOMContentLoaded", async function () {
-      // 從URL提取Cook_Id
-      const urlParams = new URL(location.href);
-      const cookId = urlParams.searchParams.get('id');
-      if (cookId) {
-        // 使用取得Cook_Id的資料
-        const BASE_URL = "http://localhost:5000/AICook/Cook/";
-        var accessToken = localStorage.getItem('accessToken');
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Bearer " + accessToken);
 
-        try {
-          var response = await fetch(BASE_URL + `GetDataById?Cook_Id=${cookId}`, {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-          });
-
-          if (!response.ok) {
-            throw new Error('Server error: ' + response.status);
-          }
-
-          var data = await response.json();
-
-          renderName(data);
-        } catch (error) {
-          if (error instanceof TypeError) {
-            console.error('Network error:', error.message);
-          } else {
-            console.error('Error:', error.message);
-          }
-        }
-      }
-    });
     // 結束教程ALERT
     document.getElementById("demo3").addEventListener("click", function () {
       swal({
