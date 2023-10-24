@@ -43,11 +43,13 @@
       <div class="crmera">
         攝像頭畫面
       </div>
-      <div class="crmera" id="pic">
-        料理圖片或片段
-      </div>
+      <!-- div改成img -->
+      <img class="crmera" id="pic">
+        <!-- 料理圖片或片段
+      </div> -->
       <!--步驟-->
       <div class="name">步驟</div>
+      <!-- <div class="nn steps"> -->
       <div class="nn steps">
         <ol>
         </ol>
@@ -158,21 +160,15 @@
       const Register2 = document.querySelector('.Register2');
       // 料理名稱
       const dishName = Register2.querySelector('.dish');
+      // 料理圖片
+      const dishPic = document.getElementById('pic');
       dishName.textContent = apiData.cook.cook_Name;
+      dishPic.src = './images/Cook/' + apiData.cook.cook_Id + '/'+ apiData.cook.cook_Id + '_food.jpg';
     };
     // 套用其他資訊
     function renderData(apiData, stepNumber) {
       console.log(apiData);
       const container = document.querySelector('.content');
-      // 料理圖片
-      const dishPic = document.getElementById('pic');
-      // if (stepNumber >= 3 && stepNumber <= (apiData.list_Processing.length + 3)) {
-      //     dishPic.textContent = apiData.processing_Photo;
-      // }
-      // else if (stepNumber >= (apiData.list_Processing.length + 2) && stepNumber <= (apiData.list_Processing.length + apiData.list_Step.length + 3)) {
-      //     dishPic.textContent = apiData.step_Photo;
-      // }
-
       // 料理步驟
       const dishStep = container.querySelector('.steps ol');
       dishStep.innerHTML = '';
