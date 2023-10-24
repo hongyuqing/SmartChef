@@ -89,8 +89,8 @@
             });
 
             if (!response.ok) {
-            throw new Error('Server error: ' + response.status);
-          }
+              throw new Error('Server error: ' + response.status);
+            }
 
             var data = await response.json();
             renderData(data, stepNumber);
@@ -176,47 +176,84 @@
       // 料理步驟
       const dishStep = container.querySelector('.steps ol');
       dishStep.innerHTML = '';
+
       if (stepNumber === 1) {
         dishStep.textContent = apiData;
       }
       else if (stepNumber === 2) {
         dishStep.textContent = apiData;
       }
-      else if (stepNumber >= 3 && stepNumber <= (apiData.list_Processing.length + 3)) {
-        dishStep.textContent = apiData.processing_Description;
-      }
-      else if (stepNumber >= (apiData.list_Processing.length + 2) && stepNumber <= (apiData.list_Processing.length + apiData.list_Step.length + 3)) {
-        dishStep.textContent = apiData.step_Description;
+      else if (stepNumber >= 3) {
+        if (apiData.processing_Description != null) {
+          dishStep.textContent = apiData.processing_Description;
+        } else if (apiData.step_Description != null) {
+          dishStep.textContent = apiData.step_Description;
+        } else if (apiData === "已完成料理教程！") {
+          // 在所有步驟完成後顯示彈跳視窗
+          swal({
+            title: "已完成料理教程！",
+            icon: "success",
+            buttons: {
+              danger: {
+                text: "確定",
+                visible: true,
+              }
+            }
+          }).then((value) => {
+            if (value === "danger") {
+              // 使用 window.location.href 跳轉到指定的HTML頁面
+              window.location.href = "./SmartChef_Learn.html";
+            }
+          });
+        }
       }
     };
 
-    // 結束教程ALERT
-    document.getElementById("demo3").addEventListener("click", function () {
-      swal({
-        title: "是否結束教程?",
-        icon: "warning",
-        buttons: {
-          Btn: false,
-          cancel: {
-            text: "取消",
-            visible: true
-          },
-          danger: {
-            text: "確定",
-            visible: true,
+      // 結束教程ALERT
+      document.getElementById("demo3").addEventListener("click", function () {
+        swal({
+          title: "是否結束教程?",
+          icon: "warning",
+          buttons: {
+            Btn: false,
+            cancel: {
+              text: "取消",
+              visible: true
+            },
+            danger: {
+              text: "確定",
+              visible: true,
+            }
           }
-        }
-      }).then((value) => {
-        if (value === "danger") {
-          // 使用 window.location.href 跳轉到指定的HTML頁面
-          window.location.href = "SmartChef_Learn.html";
-        }
+        }).then((value) => {
+          if (value === "danger") {
+            // 使用 window.location.href 跳轉到指定的HTML頁面
+            window.location.href = "SmartChef_Learn.html";
+          }
+        });
       });
-    });
-    // 返回
-    document.getElementById("back").addEventListener("click", function () {
-      window.history.back();
-    });
+      // 返回
+      document.getElementById("back").addEventListener("click", function () {
+        swal({
+          title: "是否結束教程?",
+          icon: "warning",
+          buttons: {
+            Btn: false,
+            cancel: {
+              text: "取消",
+              visible: true
+            },
+            danger: {
+              text: "確定",
+              visible: true,
+            }
+          }
+        }).then((value) => {
+          if (value === "danger") {
+            window.history.back();
+          }
+        });
+      });
   </script>
 </body>
 
