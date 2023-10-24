@@ -166,7 +166,7 @@
         stiker.className = 'learn-stiker';
         // 圖片
         const image = document.createElement('img');
-        image.src = './images/圖片1.png';
+        image.src = './images/Cook/' + item.cook_Id + '/' + item.cook_Photo;
         image.className = 'img-full';
         stiker.appendChild(image);
         leftContent.appendChild(stiker);
@@ -184,7 +184,7 @@
         // 描述
         const category = document.createElement('div');
         category.className = 'fs';
-        category.textContent = item.cook_Description;
+        //category.textContent = item.cook_Description;
         // 時間
         const dateAdded = document.createElement('div');
         dateAdded.className = 'fs1';

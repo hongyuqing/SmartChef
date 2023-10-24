@@ -275,8 +275,8 @@ footer{
     font-weight: 600;
     line-height: normal;
     display: flex;
-    width: 100px;
-    height: 36px;
+    /*width: 100px;*/
+    /* height: 36px; */
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
