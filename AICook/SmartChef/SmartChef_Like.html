@@ -167,7 +167,7 @@
 </div>
 
 </body>
-<!-- 你寫的收藏
+<!-- 你寫的收藏 -->
   <script>
     // 初始化收藏狀態（您可以根據需要從本地存儲或數據庫中讀取此信息）
     let favorites = {};
@@ -210,7 +210,7 @@
         }
     });
 
-</script> -->
+</script>
 
 
 <!-- <script>
@@ -258,20 +258,86 @@
   // });
 
   // 获取所有的图标元素
-const favoriteIcons = document.querySelectorAll('.icon-content');
+// const favoriteIcons = document.querySelectorAll('.icon-content');
 
-favoriteIcons.forEach((icon) => {
-  icon.addEventListener('click', () => {
-    icon.classList.toggle('favorite'); // 切换收藏状态
+// favoriteIcons.forEach((icon) => {
+//   icon.addEventListener('click', () => {
+//     icon.classList.toggle('favorite'); // 切换收藏状态
 
-    if (icon.classList.contains('favorite')) {
-      icon.querySelector('path').style.fill = '#F80101'; // 如果收藏状态，设置填充颜色
-    } else {
-      icon.querySelector('path').style.fill = 'none'; // 如果非收藏状态，移除填充颜色
-    }
-  });
-});
+//     if (icon.classList.contains('favorite')) {
+//       icon.querySelector('path').style.fill = '#F80101'; // 如果收藏状态，设置填充颜色
+//     } else {
+//       icon.querySelector('path').style.fill = 'none'; // 如果非收藏状态，移除填充颜色
+//     }
+//   });
+// });
 </script>
+
+<!-- <script>
+
+  async function LikeList() {
+    var accessToken = localStorage.getItem('accessToken');
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + accessToken);
+
+    var raw = "";
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:5000/AICook/Member/LikeList", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+
+  async function InsertLike() {
+    var accessToken = localStorage.getItem('accessToken');
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Bearer " + accessToken);
+
+    var raw = JSON.stringify(1);
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:5000/AICook/Member/InsertLike/{Id}", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+
+  async function DeleteLike() {
+    var accessToken = localStorage.getItem('accessToken');
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Bearer " + accessToken);
+
+    var raw = JSON.stringify(1);
+
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:5000/AICook/Member/DeleteLike/{Id}", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+
+</script> -->
 
 <script>
   document.getElementById("back").addEventListener("click", function() {

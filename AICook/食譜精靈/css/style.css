@@ -1,0 +1,638 @@
+*{
+    padding: 0;
+    margin: 0;
+    /* font-family: "Microsoft JhengHei", "PMingLiU", "Helvetica Neue", Helvetica, Arial, "Century Gothic", sans-serif; */
+}
+/* html{    
+    width: 390px;
+    height: 844px;
+} */
+.body{
+    width: auto;
+    height: 844px;
+    background-color: #FFFDF4;
+}
+.body1{
+    width: auto;
+    height: auto;
+    background-color: #FFFDF4;
+}
+/* ul{
+    display: flex;
+} */
+/* li{
+    list-style: none;
+} */
+/*--------------------header--------------------*/
+.R{
+    height: 72px;
+}
+#carouselExampleIndicators{
+    width: 350px;
+    height: 225px;
+    margin: auto;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.carousel-item img{
+    width: 350px;
+    height: 225px;
+    border-radius: 20px;
+}
+
+.content {
+    height: auto;
+    margin: 20px;
+    color: #000;
+    font-family: Noto Serif TC;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.news-title{
+    color: #000;
+    font-family: Noto Serif TC;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.news{
+    margin-top: 30px;
+    margin-left: 20px;
+    color: #000;
+    font-family: Noto Serif TC;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.news a{
+    text-decoration: none;
+    color: #000;
+}
+.onfooter{
+    height: 157px;
+}
+footer{
+    background-color: #FFFDF4;
+    width: 365px;
+    height: 133px;
+    border-radius: 50px 50px 0 0;
+    position: fixed;
+    bottom: -2px;
+    z-index: 5;
+    margin-left: 12px;
+}
+.Footer {
+    width: 365px;
+    height: 97px;
+    flex-shrink: 0;
+    margin: auto;
+    border-radius: 50px;
+    background: #C4E597;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.30);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 36px;
+    position: fixed;
+    bottom: 0px;
+    z-index: 5;
+
+}
+.mainpage{
+    height: 380px;
+    margin: 20px;
+    color: #000;
+    font-family: Noto Serif TC;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.home{
+    width: 61px;
+    height: 61px;
+    background-color: #FFF;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px;
+    margin-left: 13px;
+    margin-bottom: 13px;
+    margin-right: 29px;
+}
+.home a{
+    width: 45px;
+    height: 45px;
+    color: #45BC63;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.learn{
+    width: 61px;
+    height: 61px;
+    background-color: #FFF;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-right: 29px;
+}
+.learn a{
+    width: 35px;
+    height: 35px;
+    color: #45BC63;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.teach{
+    width: 61px;
+    height: 61px;
+    background-color: #FFF;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-right: 29px;
+}
+.teach a{
+    width: 35px;
+    height: 35px;
+    color: #45BC63;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.user{
+    width: 61px;
+    height: 61px;
+    background-color: #FFF;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-right: 13px;
+}
+.user a{
+    width: 35px;
+    height: 35px;
+    color: #45BC63;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.L{
+    height: 40px;
+    /* background-color: #FFFDF4;
+    z-index: 5; */
+}
+.LL{
+    height: 116px;
+}
+.back{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Register2 {
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+}
+.Register-word{
+    display: flex;
+    width: 50px;
+    flex-direction: column;
+    justify-content: center;
+}
+.content img{
+    width: 350px;
+    height: 220px;
+}
+.info{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    margin-left: 10px;
+}
+.dish{
+    color: #000;
+    width: 144px;
+    text-align: center;
+    font-family: Noto Serif TC;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+}
+.start{
+    width: 74px;
+    height: 43px;
+    display: flex;
+}
+.name{
+    color: #6D4C2F;
+    /* text-align: center; */
+    font-family: Noto Serif TC;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    width: 100px;
+    height: 36px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.name1{
+    color: #000;
+    /* text-align: center; */
+    font-family: Noto Serif TC;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    width: 100px;
+    height: 36px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.name a {
+    text-decoration: none;
+    color: #6D4C2F;
+}
+.name a:hover {
+    color: #000;
+}
+.in-word{
+    background-color: #FFFDF4;
+}
+.mm{
+    color: #000;
+    font-family: Noto Serif TC;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.mm li{
+    list-style: none;
+}
+.nn{
+    color: #000;
+    font-family: Noto Serif TC;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.D{
+    height: 20px;
+
+}
+/*--------------------開始頁面--------------------*/
+.crmera{
+    width: 350px;
+    height: 219px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: #D9D9D9;
+    text-align: center;
+    margin-bottom: 35px;
+    line-height: 219px;
+}
+button{
+    border: none;
+    background-color: #FFFDF4;
+}
+
+
+/*--------------------學料理--------------------*/
+.mx-2 {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.search {
+    width: 365px;
+    display: flex;
+    position: fixed;
+    z-index: 5;
+    background-color: #FFFDF4;
+    height: 86px;
+    border-radius: 0 0 30px 30px;
+}
+.search-text {
+    width: 365px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    border-radius: 100px 100px 100px 100px;
+    background: rgba(209, 209, 209, 0.45);
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+.search-text input {
+    height: 26px;
+    margin-left: 16px;
+    width: 100%;
+    border: 0px;
+    background: rgba(209, 209, 209, 0.05);
+    color: #888;
+    font-family: Noto Serif TC;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.search-text svg {
+    margin-right: 15px;
+}
+.search-text input:focus-visible {
+    outline: 0px;
+}
+.search-button {
+    width: 64px;
+    height: 40px;
+    border: 1px solid #000;
+    border-radius: 0px 100px 100px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.learn-content {
+    display: flex;
+    /* height: 100px; */
+    width: 350px;
+    height: 136.62px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #FFF6B4;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.learn-content2 {
+    display: flex;
+    /* height: 100px; */
+    width: 350px;
+    height: 136.62px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #FFD99B;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.learn-content2 a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+}
+.learn-content2 a:hover {
+    color: #000;
+}
+.learn-content-left {
+    display: flex;
+}
+.learn-stiker {
+    width: 100px;
+    height: 100px;
+    margin-top: 18px;
+    margin-left: 20px;
+    margin-right: 35px;
+}
+.learn-stiker .img-full {
+    width: 100px;
+    height: 100px;
+}
+.learn-content-right {
+    display: flex;
+    margin-top: 18px;
+}
+.learn-content-right .icon:hover {
+    background-color: inherit;
+}
+.FS {
+    display: flex;
+    width: 96px;
+    height: 42.228px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    text-align: center;
+    font-family: Noto Serif TC;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.fs {
+    color: #6D4C2F;
+    font-family: Noto Serif TC;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+}
+.fs1{
+    color: #000;
+    font-family: Noto Serif TC;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+}
+.learn-content a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+}
+.learn-content a:hover {
+    color: #000;
+}
+.icon {
+    display: flex;
+}
+.icon-content {
+    width: 20px;
+    height: 18.35px;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 31px;
+    margin-left: 48px;
+}
+.learn-title{
+    display: flex;
+    width: 164px;
+    height: 31px;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Noto Serif TC;
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 20px;
+}
+
+
+.user-up{
+    display: flex;
+}
+.user-p{
+    /* width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    border-radius: 150px;
+    border: 1px solid #D5D5D5;
+    background: #FFF; */
+    margin-top: 18px;
+    margin-left: 43px;
+    margin-bottom: 53px;
+}
+.user-name{
+    display: flex;
+    width: 197px;
+    height: 73px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    text-align: center;
+    font-family: Noto Serif TC;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 56px;
+}
+
+
+/*--------------------學習紀錄--------------------*/
+
+
+
+.TOP{
+    height: 60px;
+    margin-bottom: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title{
+    color: #000;
+    text-align: center;
+    font-family: Noto Serif TC;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.Register-word-record{
+    display: flex;
+    width: 24px;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 17px;
+}
+.record-content{
+    background: rgba(168, 223, 244, 0.65);
+    display: flex;
+    /* height: 100px; */
+    width: 350px;
+    height: 136.62px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.record-content a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+}
+.record-content a:hover {
+    color: #000;
+}
+.icon-content-record {
+    width: 20px;
+    height: 18.35px;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 85px;
+    margin-left: 48px;
+}
+
+.TEdit-content{
+    background: rgba(223, 244, 168, 0.75);
+    display: flex;
+    /* height: 100px; */
+    width: 350px;
+    height: 136.62px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.TEdit-content a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+}
+.TEdit-content a:hover {
+    color: #000;
+}
+.icon-content-TEdit {
+    width: 20px;
+    height: 18.35px;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 93px;
+    margin-left: 48px;
+}
+
+.Like-content{
+    background: rgba(245, 210, 216, 0.75);
+    display: flex;
+    /* height: 100px; */
+    width: 350px;
+    height: 136.62px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.Like-content a {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+}
+.Like-content a:hover {
+    color: #000;
+}
