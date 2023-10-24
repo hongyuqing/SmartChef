@@ -17,7 +17,6 @@
 <body>
   <div class="body1">
     <!-- <div class="L">
-
     </div> -->
 
     <div class="search">
@@ -102,50 +101,103 @@
   <script>
     // 連接料理列表
     document.addEventListener("DOMContentLoaded", async function () {
-      const BASE_URL = "http://localhost:5000/AICook/Cook/";
-      var accessToken = localStorage.getItem('accessToken');
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", "Bearer " + accessToken);
-      try {
-        var raw = JSON.stringify([
-          {
-            "cook_Id": 0,
-            "member_Id": 0,
-            "cook_UpdateTime": "2023-10-20T13:39:00.324Z",
-            "cook_PostCheck": true,
-            "cook_Name": "string",
-            "cook_Description": "string",
-            "cook_Browse": 0,
-            "cook_Like": 0,
-            "cook_Public": true,
-            "cook_Photo": "string",
-            "member_Username": "string"
+      // 搜尋
+      const inputElement = document.getElementById("textInput");
+      const submitButton = document.getElementById("submitButton");
+
+      submitButton.addEventListener("click", function () {
+        const userInput = inputElement.value;
+      });
+      if (inputElement != null) {
+        const BASE_URL = "http://localhost:5000/AICook/Cook/";
+        var accessToken = localStorage.getItem('accessToken');
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Bearer " + accessToken);
+        try {
+          var raw = JSON.stringify([
+            {
+              "cook_Id": 0,
+              "member_Id": 0,
+              "cook_UpdateTime": "2023-10-20T13:39:00.324Z",
+              "cook_PostCheck": true,
+              "cook_Name": "string",
+              "cook_Description": "string",
+              "cook_Browse": 0,
+              "cook_Like": 0,
+              "cook_Public": true,
+              "cook_Photo": "string",
+              "member_Username": "string"
+            }
+          ]);
+
+          var response = await fetch(BASE_URL + "GetDataList", {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+          });
+
+          if (!response.ok) {
+            throw new Error('Server error: ' + response.status);
           }
-        ]);
 
-        var response = await fetch(BASE_URL + "GetDataList", {
-          method: 'GET',
-          headers: myHeaders,
-          redirect: 'follow'
-        });
+          var data = await response.json();
+          renderData(data);
 
-        if (!response.ok) {
-          throw new Error('Server error: ' + response.status);
-        }
-
-        var data = await response.json();
-        renderData(data);
-
-      } catch (error) {
-        if (error instanceof TypeError) {
-          console.error('Network error:', error.message);
-        } else {
-          console.error('Error:', error.message);
+        } catch (error) {
+          if (error instanceof TypeError) {
+            console.error('Network error:', error.message);
+          } else {
+            console.error('Error:', error.message);
+          }
         }
       }
-    });
+      else {
+        const BASE_URL = "http://localhost:5000/AICook/Cook/";
+        var accessToken = localStorage.getItem('accessToken');
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Bearer " + accessToken);
+        try {
+          var raw = JSON.stringify([
+            {
+              "cook_Id": 0,
+              "member_Id": 0,
+              "cook_UpdateTime": "2023-10-20T13:39:00.324Z",
+              "cook_PostCheck": true,
+              "cook_Name": "string",
+              "cook_Description": "string",
+              "cook_Browse": 0,
+              "cook_Like": 0,
+              "cook_Public": true,
+              "cook_Photo": "string",
+              "member_Username": "string"
+            }
+          ]);
 
+          var response = await fetch(BASE_URL + "GetSearchList?Search=" + userInput, {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+          });
+
+          if (!response.ok) {
+            throw new Error('Server error: ' + response.status);
+          }
+
+          var data = await response.json();
+          renderData(data);
+
+        } catch (error) {
+          if (error instanceof TypeError) {
+            console.error('Network error:', error.message);
+          } else {
+            console.error('Error:', error.message);
+          }
+        }
+      }
+
+    });
     // 套用CSS
     function renderData(apiData) {
       const container = document.querySelector('.learn-body');
@@ -166,7 +218,7 @@
         stiker.className = 'learn-stiker';
         // 圖片
         const image = document.createElement('img');
-        image.src = "../../../Recipes/" + item.cook_Id + "/" + item.cook_Photo +".png";
+        image.src = "../../../Recipes/" + item.cook_Id + "/" + item.cook_Photo + ".png";
         image.className = 'img-full';
         stiker.appendChild(image);
         leftContent.appendChild(stiker);
