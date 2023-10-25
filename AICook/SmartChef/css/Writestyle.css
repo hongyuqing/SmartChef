@@ -4,6 +4,9 @@
     font-family: "Microsoft JhengHei", "PMingLiU", "Helvetica Neue", Helvetica, Arial, "Century Gothic", sans-serif;
     font-family: Noto Serif TC;
 }
+::-webkit-scrollbar {
+    display: none;
+}
 body{
     background: #FFFDF4;
 }

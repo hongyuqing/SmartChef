@@ -42,7 +42,7 @@
     <!--Content-->
     <div class="content">
       <!--料理教程圖片-->
-      <img src="images/1.png">
+      <img class="pic">
       <div class="info">
         <div class="dish"></div>
         <div class="start">
@@ -201,6 +201,10 @@
       // 料理名稱
       const dishName = container.querySelector('.dish');
       dishName.textContent = apiData.cook.cook_Name;
+
+      // 料理圖片
+      const dishPic = container.querySelector('.pic');
+      dishPic.src = './images/Cook/' + apiData.cook.cook_Id + '/' + apiData.cook.cook_Photo;
 
       // 料理描述
       const dishDescription = container.querySelector('.description');

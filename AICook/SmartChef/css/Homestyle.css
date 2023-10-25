@@ -3,6 +3,9 @@
     margin: 0;
     font-family: "Microsoft JhengHei", "PMingLiU", "Helvetica Neue", Helvetica, Arial, "Century Gothic", sans-serif;
 }
+::-webkit-scrollbar {
+    display: none;
+}
 /* html{    
     width: 390px;
     height: 844px;

@@ -44,9 +44,8 @@
         攝像頭畫面
       </div>
       <!-- div改成img -->
-      <img class="crmera" id="pic">
-        <!-- 料理圖片或片段
-      </div> -->
+      <img id="pic" class="recipeimg">
+      <!-- 料理圖片或片段-->
       <!--步驟-->
       <div class="name">步驟</div>
       <!-- <div class="nn steps"> -->
@@ -59,21 +58,20 @@
   </div>
 
   <script>
-
     // nextStepButton
     const nextStepButton = document.getElementById("nextStepButton");
+    let processing_num = 1;
+    let step_num = 1;
     // 下一步
     document.addEventListener("DOMContentLoaded", async function () {
       // 從URL提取Cook_Id
       const urlParams = new URL(location.href);
       const cookId = urlParams.searchParams.get('id');
-      let stepNumber = 1; // 步驟初始值
-
       // 获取下一步按钮
       const nextStepButton = document.getElementById("nextStepButton");
-
+      let stepNumber = 1; // 步驟初始值
       // 判斷是否有Cook_Id
-      if (cookId) {
+      if (cookId != null) {
         // 使用取得Cook_Id的資料
         const BASE_URL = "http://localhost:5000/AICook/Cook/";
         var accessToken = localStorage.getItem('accessToken');
@@ -123,7 +121,8 @@
       // 從URL提取Cook_Id
       const urlParams = new URL(location.href);
       const cookId = urlParams.searchParams.get('id');
-      if (cookId) {
+      console.log(cookId);
+      if (cookId != null) {
         // 使用取得Cook_Id的資料
         const BASE_URL = "http://localhost:5000/AICook/Cook/";
         var accessToken = localStorage.getItem('accessToken');
@@ -156,34 +155,38 @@
     });
 
     // 套用料理名稱
-    function renderName(apiData) {
+    function renderName(apiData, stepNumber) {
       const Register2 = document.querySelector('.Register2');
       // 料理名稱
       const dishName = Register2.querySelector('.dish');
-      // 料理圖片
-      const dishPic = document.getElementById('pic');
       dishName.textContent = apiData.cook.cook_Name;
-      dishPic.src = './images/Cook/' + apiData.cook.cook_Id + '/'+ apiData.cook.cook_Id + '_food.jpg';
     };
+    
     // 套用其他資訊
     function renderData(apiData, stepNumber) {
       console.log(apiData);
       const container = document.querySelector('.content');
-      // 料理步驟
+      const dishPic = document.getElementById('pic');
       const dishStep = container.querySelector('.steps ol');
-      dishStep.innerHTML = '';
 
-      if (stepNumber === 1) {
+      // 料理步驟
+      // if (stepNumber < 3)
+      //   dishPic.src = './images/Cook/' + '8' + '/' + '8' + '_food.jpg';
+      if (stepNumber < 3) {
         dishStep.textContent = apiData;
-      }
-      else if (stepNumber === 2) {
-        dishStep.textContent = apiData;
-      }
-      else if (stepNumber >= 3) {
+        dishPic.src = './images/Cook/' + '8' + '/' + '8' + '_food.jpg';
+      } else {
+        dishStep.innerHTML = ''; // 清空步驟描述
+
         if (apiData.processing_Description != null) {
           dishStep.textContent = apiData.processing_Description;
+          dishPic.src = './images/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_procesing_' + (processing_num) + '.jpeg';
+          console.log(processing_num);
+          processing_num++;
         } else if (apiData.step_Description != null) {
           dishStep.textContent = apiData.step_Description;
+          dishPic.src = './images/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_step_' + (step_num) + '.jpg';
+          step_num++;
         } else if (apiData === "已完成料理教程！") {
           // 在所有步驟完成後顯示彈跳視窗
           swal({
@@ -205,51 +208,52 @@
       }
     };
 
-      // 結束教程ALERT
-      document.getElementById("demo3").addEventListener("click", function () {
-        swal({
-          title: "是否結束教程?",
-          icon: "warning",
-          buttons: {
-            Btn: false,
-            cancel: {
-              text: "取消",
-              visible: true
-            },
-            danger: {
-              text: "確定",
-              visible: true,
-            }
+
+    // 結束教程ALERT
+    document.getElementById("demo3").addEventListener("click", function () {
+      swal({
+        title: "是否結束教程?",
+        icon: "warning",
+        buttons: {
+          Btn: false,
+          cancel: {
+            text: "取消",
+            visible: true
+          },
+          danger: {
+            text: "確定",
+            visible: true,
           }
-        }).then((value) => {
-          if (value === "danger") {
-            // 使用 window.location.href 跳轉到指定的HTML頁面
-            window.location.href = "SmartChef_Learn.html";
-          }
-        });
+        }
+      }).then((value) => {
+        if (value === "danger") {
+          // 使用 window.location.href 跳轉到指定的HTML頁面
+          window.location.href = "SmartChef_Learn.html";
+        }
       });
-      // 返回
-      document.getElementById("back").addEventListener("click", function () {
-        swal({
-          title: "是否結束教程?",
-          icon: "warning",
-          buttons: {
-            Btn: false,
-            cancel: {
-              text: "取消",
-              visible: true
-            },
-            danger: {
-              text: "確定",
-              visible: true,
-            }
+    });
+    // 返回
+    document.getElementById("back").addEventListener("click", function () {
+      swal({
+        title: "是否結束教程?",
+        icon: "warning",
+        buttons: {
+          Btn: false,
+          cancel: {
+            text: "取消",
+            visible: true
+          },
+          danger: {
+            text: "確定",
+            visible: true,
           }
-        }).then((value) => {
-          if (value === "danger") {
-            window.history.back();
-          }
-        });
+        }
+      }).then((value) => {
+        if (value === "danger") {
+          window.location.href = "SmartChef_Learn.html";
+        }
       });
+    });
   </script>
 </body>
 

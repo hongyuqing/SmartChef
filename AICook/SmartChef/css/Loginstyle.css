@@ -3,6 +3,9 @@
     margin: 0;
     font-family: Noto Serif TC;
 }
+::-webkit-scrollbar {
+    display: none;
+}
 a {
     color: #000;
     text-decoration: none;
