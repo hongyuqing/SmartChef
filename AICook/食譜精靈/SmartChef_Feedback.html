@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Userstyle.css">
+    <title>SmartChef - Feedback</title>
+</head>
+
+<body>
+    <div class="TOP2">
+        <div class="back">
+            <a href="SmartChef_User.html">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M16.62 2.99004C16.5039 2.87363 16.366 2.78127 16.2141 2.71826C16.0622 2.65524 15.8994 2.6228 15.735 2.6228C15.5706 2.6228 15.4078 2.65524 15.2559 2.71826C15.1041 2.78127 14.9661 2.87363 14.85 2.99004L6.54 11.3C6.4473 11.3926 6.37375 11.5024 6.32357 11.6234C6.27339 11.7444 6.24756 11.8741 6.24756 12.005C6.24756 12.136 6.27339 12.2657 6.32357 12.3867C6.37375 12.5076 6.4473 12.6175 6.54 12.71L14.85 21.02C15.34 21.51 16.13 21.51 16.62 21.02C17.11 20.53 17.11 19.74 16.62 19.25L9.38 12L16.63 4.75004C17.11 4.27004 17.11 3.47004 16.62 2.99004Z"
+                        fill="black" />
+                </svg>
+            </a>
+        </div>
+        <div class="title">
+            <p>使用回饋</p>
+        </div>
+        <div class="Register-word">
+            <!-- <a href="#" class="word">登入</a> -->
+        </div>
+    </div>
+    <form id="feedback-form">
+        <div class="Content_Convert">
+            <div class="custom-select">
+                <select id="feedback-category">
+                    <option value="0">系統介面</option>
+                    <option value="1">教程教學</option>
+                    <option value="2">辨識功能</option>
+                    <option value="3">AI轉換(搜圖功能)</option>
+                    <option value="4">其他</option>
+                </select>
+            </div>
+            <textarea rows="22" cols="32" id="feedback-content" placeholder="撰寫反饋..."></textarea>
+            <div class="H-input">
+                <input type="submit" value="發送" class="b-login" id="submit-button">
+            </div>
+        </div>
+    </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const feedbackForm = document.getElementById("feedback-form");
+            const selectElement = document.getElementById("feedback-category");
+            const textareaElement = document.getElementById("feedback-content");
+            const submitButton = document.getElementById("submit-button");
+
+            feedbackForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const selectedOption = selectElement.value;
+                const feedbackText = textareaElement.value;
+
+                if (!selectedOption || !feedbackText) {
+                    alert("請選擇類別並輸入反饋內容");
+                    return;
+                }
+
+                submitButton.disabled = true;
+                selectElement.disabled = true;
+                textareaElement.disabled = true;
+
+                try {
+                    const feedbackData = {
+                        "feedback_Target": selectedOption,
+                        "feedback_Content": feedbackText
+                    };
+
+                    const feedbackJSON = JSON.stringify(feedbackData);
+                    localStorage.setItem('userData', feedbackJSON);
+                    console.log(feedbackJSON);
+
+                    const myHeaders = new Headers();
+                    myHeaders.append("Content-Type", "application/json");
+                    myHeaders.append("Cookie", "AICookToken=123");
+
+                    const requestOptions = {
+                        method: 'POST',
+                        headers: myHeaders,
+                        body: feedbackJSON,
+                        redirect: 'follow'
+                    };
+
+                    const response = await fetch("http://localhost:5000/AICook/Feedback", requestOptions);
+                    const result = await response.text();
+
+                    console.log(result);
+                    alert("新增成功");
+                    window.location.href = "SmartChef_User.html";
+                } catch (error) {
+                    console.error('發生錯誤:', error);
+                    alert("新增失敗，請稍後重試");
+                } finally {
+                    submitButton.disabled = false;
+                    selectElement.disabled = false;
+                    textareaElement.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

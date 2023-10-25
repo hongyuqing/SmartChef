@@ -318,6 +318,11 @@ footer{
 
 }
 /*--------------------開始頁面--------------------*/
+.content-Start{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 .crmera{
     width: 95%;
     height: 219px;
@@ -338,6 +343,13 @@ footer{
 button{
     border: none;
     background-color: #FFFDF4;
+}
+.nextStepButton{
+    bottom: 0px;
+}
+.nextStepButton a{
+    color: #000;
+    text-decoration: none;
 }
 
 
@@ -397,6 +409,7 @@ button{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 95%;
 }
 .learn-body a{
     text-decoration: none;
