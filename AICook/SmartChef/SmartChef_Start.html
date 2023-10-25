@@ -40,21 +40,12 @@
     </div>
 
     <div class="content">
-      <div class="content-Start">
-        <div class="crmera">
-          攝像頭畫面
-        </div>
-        <!-- div改成img -->
-        <img class="crmera" id="pic">
-          <!-- 料理圖片或片段
-        </div> -->
+      <div class="crmera">
+        攝像頭畫面
       </div>
-<<<<<<< HEAD
       <!-- div改成img -->
       <img id="pic" class="recipeimg">
       <!-- 料理圖片或片段-->
-=======
->>>>>>> cdc483b7de291b7865e85142780f03e9be11fc4f
       <!--步驟-->
       <div class="name">步驟</div>
       <!-- <div class="nn steps"> -->
@@ -63,7 +54,7 @@
         </ol>
       </div>
     </div>
-    <a href="#" class="nextStepButton" id="nextStepButton">下一步</a>
+    <a href="#" id="nextStepButton">下一步</a>
   </div>
 
   <script>
@@ -179,8 +170,6 @@
       const dishStep = container.querySelector('.steps ol');
 
       // 料理步驟
-      // if (stepNumber < 3)
-      //   dishPic.src = './images/Cook/' + '8' + '/' + '8' + '_food.jpg';
       if (stepNumber < 3) {
         dishStep.textContent = apiData;
         dishPic.src = './images/Cook/' + '8' + '/' + '8' + '_food.jpg';
@@ -256,19 +245,11 @@
             text: "確定",
             visible: true,
           }
-<<<<<<< HEAD
         }
       }).then((value) => {
         if (value === "danger") {
           window.location.href = "SmartChef_Learn.html";
         }
-=======
-        }).then((value) => {
-          if (value === "danger") {
-            window.location.href = "SmartChef_Learn.html";
-          }
-        });
->>>>>>> cdc483b7de291b7865e85142780f03e9be11fc4f
       });
     });
   </script>
