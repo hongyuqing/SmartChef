@@ -55,7 +55,9 @@
         </ol>
       </div>
     </div>
-    <button class="nextStepButton playButton">下一步</button>
+    <button class="nextStepButton playButton">下一步</button>｜
+    <button class="repeatStepButton playButton">再一次</button>｜
+    <button class="pastStepButton playButton">上一步</button>
     <audio id="myAudio" autoplay></audio>
   </div>
 
@@ -70,47 +72,44 @@
     canvas.height = 480;
 
     navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
-            video.srcObject = stream;
-        })
-        .catch((error) => {
-            console.error("Error accessing the camera: " + error);
-        });
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        video.srcObject = stream;
+      })
+      .catch((error) => {
+        console.error("Error accessing the camera: " + error);
+      });
 
     video.addEventListener("play", () => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
-        const sendFrame = async() => {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageData = canvas.toDataURL("image/jpeg", 0.7); // 将图像转换为JPEG格式
-            
-            await setTimeout(()=>{
-                ws.send(imageData); // 将图像数据发送到后端
-                requestAnimationFrame(sendFrame);
-            }, 30)
+      const sendFrame = async () => {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = canvas.toDataURL("image/jpeg", 0.7); // 将图像转换为JPEG格式
 
-            
-        };
+        await setTimeout(() => {
+          ws.send(imageData); // 将图像数据发送到后端
+          requestAnimationFrame(sendFrame);
+        }, 30)
 
-        sendFrame();
+
+      };
+
+      sendFrame();
     });
-
     ws.onmessage = (event) => {
-        const imageBlob = new Blob([event.data], { type: "image/jpeg" });
-        var reader = new FileReader();
-        //直接利用Base64顯示圖片 資源消耗少
-        reader.readAsDataURL(imageBlob); 
-        reader.onloadend = function() {
-            img.src = reader.result;                
-        }
+      const imageBlob = new Blob([event.data], { type: "image/jpeg" });
+      var reader = new FileReader();
+      //直接利用Base64顯示圖片 資源消耗少
+      reader.readAsDataURL(imageBlob);
+      reader.onloadend = function () {
+        img.src = reader.result;
+      }
     };
 
 
-
-    // nextStepButton
-    const nextStepButton = document.querySelector(".nextStepButton");
+    // 當前畫面
     let processing_num = 1;
     let step_num = 1;
     // 下一步
@@ -118,15 +117,46 @@
       // 從URL提取Cook_Id
       const urlParams = new URL(location.href);
       const cookId = urlParams.searchParams.get('id');
-      // 語音---------
-      const audioElement = document.getElementById('myAudio');
-      audioElement.src = './audios/Cook/' + cookId + '/' + cookId + '_food.mp3' 
-      // 获取下一步按钮
-      const nextStepButton = document.querySelector(".nextStepButton");
-
       let stepNumber = 1; // 步驟初始值
+      // 語音
+      const audioElement = document.getElementById('myAudio');
+      audioElement.src = './audios/Cook/' + cookId + '/' + cookId + '_food.mp3'
+      audioElement.autoplay = true
+
+      // 語音按鈕
+      const nextStepButton = document.querySelector(".nextStepButton");
+      const repeatStepButton = document.querySelector(".repeatStepButton");
+      const partStepButton = document.querySelector(".pastStepButton");
+
       // 判斷是否有Cook_Id
       if (cookId != null) {
+        // 使用取得Cook_Id的資料
+        const BASE_URL1 = "http://localhost:5000/AICook/Cook/";
+        var accessToken = localStorage.getItem('accessToken');
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Bearer " + accessToken);
+
+        try {
+          var response = await fetch(BASE_URL1 + `GetDataById?Cook_Id=${cookId}`, {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+          });
+
+          if (!response.ok) {
+            throw new Error('Server error: ' + response.status);
+          }
+
+          var data = await response.json();
+          renderName(data);
+        } catch (error) {
+          if (error instanceof TypeError) {
+            console.error('Network error:', error.message);
+          } else {
+            console.error('Error:', error.message);
+          }
+        }
         // 使用取得Cook_Id的資料
         const BASE_URL = "http://localhost:5000/AICook/Cook/";
         var accessToken = localStorage.getItem('accessToken');
@@ -148,6 +178,8 @@
             }
 
             var data = await response.json();
+            console.log(data);
+            console.log(stepNumber);
             renderData(data, stepNumber);
           } catch (error) {
             if (error instanceof TypeError) {
@@ -157,55 +189,25 @@
             }
           }
         }
-
         // 初始的數據獲取和渲染
         fetchAndRenderNextStep();
 
-        // 下一步按鈕的點擊事件
+        // 下一步
         nextStepButton.addEventListener("click", async function () {
           stepNumber++;
-
           // 獲取並渲染下一步數據
           fetchAndRenderNextStep();
         });
-      }
-    });
-
-    // 取得Cook_Id的資料資料
-    document.addEventListener("DOMContentLoaded", async function () {
-      // 從URL提取Cook_Id
-      const urlParams = new URL(location.href);
-      const cookId = urlParams.searchParams.get('id');
-      console.log(cookId);
-      if (cookId != null) {
-        // 使用取得Cook_Id的資料
-        const BASE_URL = "http://localhost:5000/AICook/Cook/";
-        var accessToken = localStorage.getItem('accessToken');
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Bearer " + accessToken);
-
-        try {
-          var response = await fetch(BASE_URL + `GetDataById?Cook_Id=${cookId}`, {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-          });
-
-          if (!response.ok) {
-            throw new Error('Server error: ' + response.status);
-          }
-
-          var data = await response.json();
-
-          renderName(data);
-        } catch (error) {
-          if (error instanceof TypeError) {
-            console.error('Network error:', error.message);
-          } else {
-            console.error('Error:', error.message);
-          }
-        }
+        // 再一次
+        repeatStepButton.addEventListener("click", async function () {
+          fetchAndRenderNextStep();
+        });
+        // 上一步
+        partStepButton.addEventListener("click", async function () {
+          stepNumber--;
+          // 獲取並渲染下一步數據
+          fetchAndRenderNextStep();
+        });
       }
     });
 
@@ -219,15 +221,14 @@
 
     // 套用其他資訊
     function renderData(apiData, stepNumber) {
-      console.log(apiData);
       const container = document.querySelector('.content');
       const dishPic = document.getElementById('pic');
       const dishStep = container.querySelector('.steps ol');
+
       // 語音
       const audioElement = document.getElementById('myAudio');
-      audioElement.src = './audios/Cook/' + apiData.cook_Id + '_food.mp3'
-      audioElement.autoplay = true
       const playButton = document.querySelector('.playButton');
+
       playButton.addEventListener('click', function () {
         audioElement.play();
       });
@@ -239,9 +240,9 @@
         if (stepNumber === 1) {
           // 撥放音檔
           audioElement.src = './audios/Cook/' + apiData.id + '/' + apiData.id + '_food.mp3';
-          playButton.disabled = false;
+          playButton.autoplay = true;
         }
-        else if (stepNumber === 2) {
+        if (stepNumber === 2) {
           // 撥放音檔
           audioElement.src = './audios/Cook/' + apiData.id + '/' + apiData.id + '_seasoning.mp3';
           playButton.disabled = false;
@@ -261,7 +262,7 @@
           dishStep.textContent = apiData.step_Description;
           dishPic.src = './images/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_step_' + (step_num) + '.jpg';
           // 撥放音檔
-          audioElement.src = './audios/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + + '_step_' + (processing_num) + '.mp3';
+          audioElement.src = './audios/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_step_' + (step_num) + '.mp3';
           playButton.disabled = false;
           step_num++;
         }
