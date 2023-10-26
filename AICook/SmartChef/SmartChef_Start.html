@@ -40,15 +40,13 @@
     </div>
 
     <div class="content">
-      <div class="crmera">
-        攝像頭畫面
-      </div>
-<<<<<<< HEAD
+      <!-- 攝像頭 -->
+      <video id="video" autoplay width="640" height="480" style="display: none;"></video>
+      <canvas id="canvas" style="display: none;"></canvas>
+      <img id="img" width="640" height="480" class="recipeimg">
       <!-- div改成img -->
       <img id="pic" class="recipeimg">
       <!-- 料理圖片或片段-->
-=======
->>>>>>> 1da4ee01c4b22a104007d59008836e07fe6eec2b
       <!--步驟-->
       <div class="name">步驟</div>
       <!-- <div class="nn steps"> -->
@@ -57,12 +55,62 @@
         </ol>
       </div>
     </div>
-    <a href="#" id="nextStepButton">下一步</a>
+    <button class="nextStepButton playButton">下一步</button>
+    <audio id="myAudio" autoplay></audio>
   </div>
 
   <script>
+    //攝像頭畫面
+    const video = document.getElementById("video");
+    const img = document.getElementById("img");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const ws = new WebSocket("ws://localhost:8080");
+    canvas.width = 640;
+    canvas.height = 480;
+
+    navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+            video.srcObject = stream;
+        })
+        .catch((error) => {
+            console.error("Error accessing the camera: " + error);
+        });
+
+    video.addEventListener("play", () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        const sendFrame = async() => {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL("image/jpeg", 0.7); // 将图像转换为JPEG格式
+            
+            await setTimeout(()=>{
+                ws.send(imageData); // 将图像数据发送到后端
+                requestAnimationFrame(sendFrame);
+            }, 30)
+
+            
+        };
+
+        sendFrame();
+    });
+
+    ws.onmessage = (event) => {
+        const imageBlob = new Blob([event.data], { type: "image/jpeg" });
+        var reader = new FileReader();
+        //直接利用Base64顯示圖片 資源消耗少
+        reader.readAsDataURL(imageBlob); 
+        reader.onloadend = function() {
+            img.src = reader.result;                
+        }
+    };
+
+
+
     // nextStepButton
-    const nextStepButton = document.getElementById("nextStepButton");
+    const nextStepButton = document.querySelector(".nextStepButton");
     let processing_num = 1;
     let step_num = 1;
     // 下一步
@@ -70,8 +118,12 @@
       // 從URL提取Cook_Id
       const urlParams = new URL(location.href);
       const cookId = urlParams.searchParams.get('id');
+      // 語音---------
+      const audioElement = document.getElementById('myAudio');
+      audioElement.src = './audios/Cook/' + cookId + '/' + cookId + '_food.mp3' 
       // 获取下一步按钮
-      const nextStepButton = document.getElementById("nextStepButton");
+      const nextStepButton = document.querySelector(".nextStepButton");
+
       let stepNumber = 1; // 步驟初始值
       // 判斷是否有Cook_Id
       if (cookId != null) {
@@ -164,31 +216,56 @@
       const dishName = Register2.querySelector('.dish');
       dishName.textContent = apiData.cook.cook_Name;
     };
-    
+
     // 套用其他資訊
     function renderData(apiData, stepNumber) {
       console.log(apiData);
       const container = document.querySelector('.content');
       const dishPic = document.getElementById('pic');
       const dishStep = container.querySelector('.steps ol');
+      // 語音
+      const audioElement = document.getElementById('myAudio');
+      audioElement.src = './audios/Cook/' + apiData.cook_Id + '_food.mp3'
+      audioElement.autoplay = true
+      const playButton = document.querySelector('.playButton');
+      playButton.addEventListener('click', function () {
+        audioElement.play();
+      });
 
       // 料理步驟
       if (stepNumber < 3) {
-        dishStep.textContent = apiData;
-        dishPic.src = './images/Cook/' + '8' + '/' + '8' + '_food.jpg';
-      } else {
+        dishStep.textContent = apiData.dataList;
+        dishPic.src = './images/Cook/' + apiData.id + '/' + apiData.id + '_food.jpg';
+        if (stepNumber === 1) {
+          // 撥放音檔
+          audioElement.src = './audios/Cook/' + apiData.id + '/' + apiData.id + '_food.mp3';
+          playButton.disabled = false;
+        }
+        else if (stepNumber === 2) {
+          // 撥放音檔
+          audioElement.src = './audios/Cook/' + apiData.id + '/' + apiData.id + '_seasoning.mp3';
+          playButton.disabled = false;
+        }
+      }
+      else {
         dishStep.innerHTML = ''; // 清空步驟描述
-
         if (apiData.processing_Description != null) {
           dishStep.textContent = apiData.processing_Description;
           dishPic.src = './images/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_procesing_' + (processing_num) + '.jpeg';
-          console.log(processing_num);
+          // 撥放音檔
+          audioElement.src = './audios/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_procesing_' + (processing_num) + '.mp3';
+          playButton.disabled = false;
           processing_num++;
-        } else if (apiData.step_Description != null) {
+        }
+        else if (apiData.step_Description != null) {
           dishStep.textContent = apiData.step_Description;
           dishPic.src = './images/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_step_' + (step_num) + '.jpg';
+          // 撥放音檔
+          audioElement.src = './audios/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + + '_step_' + (processing_num) + '.mp3';
+          playButton.disabled = false;
           step_num++;
-        } else if (apiData === "已完成料理教程！") {
+        }
+        else if (apiData === "已完成料理教程！") {
           // 在所有步驟完成後顯示彈跳視窗
           swal({
             title: "已完成料理教程！",
@@ -208,7 +285,6 @@
         }
       }
     };
-
 
     // 結束教程ALERT
     document.getElementById("demo3").addEventListener("click", function () {
