@@ -178,7 +178,7 @@
             }
 
             var data = await response.json();
-            console.log(data);
+            console.log('Data',data);
             console.log(stepNumber);
             renderData(data, stepNumber);
           } catch (error) {
@@ -191,6 +191,60 @@
         }
         // 初始的數據獲取和渲染
         fetchAndRenderNextStep();
+
+//語音控制start
+        const recognition = new webkitSpeechRecognition();
+        let transcript = '';
+        // 設置語音辨識選項
+        recognition.continuous = true;  // 連續模式
+
+        // 監聽語音辨識結果
+        recognition.onresult = async(event) => {
+            const resultElement = document.getElementById('result');
+            transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            console.log('語音輸入：', transcript);
+            if(transcript.includes('下一步')){
+                console.log('辨識成功');
+                transcript = '';
+                stepNumber++;
+                // 獲取並渲染下一步數據
+                await fetchAndRenderNextStep();
+                recognition.stop()
+                setTimeout(() => {
+                    recognition.start();
+                }, 5000);
+            }
+            else if(transcript.includes('上一步')){
+              console.log('辨識成功');
+              transcript = '';
+              stepNumber--;
+              // 獲取並渲染下一步數據
+              await fetchAndRenderNextStep();
+              recognition.stop()
+              setTimeout(() => {
+                  recognition.start();
+              }, 5000);
+            }
+            else if(transcript.includes('再說一次')){
+              console.log('辨識成功');
+              transcript = '';
+              // 獲取並渲染下一步數據
+              await fetchAndRenderNextStep();
+              recognition.stop()
+              setTimeout(() => {
+                  recognition.start();
+              }, 5000);
+            }
+            else{
+                console.log('辨識失敗');
+            }
+        };
+        // 開始語音辨識
+        recognition.start();
+//語音控制end
 
         // 下一步
         nextStepButton.addEventListener("click", async function () {
