@@ -55,9 +55,6 @@
         </ol>
       </div>
     </div>
-    <button class="nextStepButton playButton">下一步</button>｜
-    <button class="repeatStepButton playButton">再一次</button>｜
-    <button class="pastStepButton playButton">上一步</button>
     <audio id="myAudio" autoplay></audio>
   </div>
 
@@ -112,12 +109,6 @@
     // 當前畫面
     let processing_num = 1;
     let step_num = 1;
-    var recognition = new webkitSpeechRecognition(); // 建立語音辨識物件 webkitSpeechRecognition
-    recognition.continuous = true; // 設定連續辨識模式
-    recognition.interimResults = true; // 設定輸出中先結果。
-    var final_transcript = ''; // 最終的辨識訊息的變數
-    var recognizing = false; // 是否辨識中
-
     // 下一步
     document.addEventListener("DOMContentLoaded", async function () {
       // 從URL提取Cook_Id
@@ -129,10 +120,6 @@
       audioElement.src = './audios/Cook/' + cookId + '/' + cookId + '_food.mp3'
       audioElement.autoplay = true
 
-      // 語音按鈕
-      const nextStepButton = document.querySelector(".nextStepButton");
-      const repeatStepButton = document.querySelector(".repeatStepButton");
-      const partStepButton = document.querySelector(".pastStepButton");
 
       // 判斷是否有Cook_Id
       if (cookId != null) {
@@ -163,40 +150,15 @@
             console.error('Error:', error.message);
           }
         }
-        function startVoiceRecognition() {
-          recognition.onresult = function (event) {
-            var final_transcript = '';
-            for (var i = event.resultIndex; i < event.results.length; ++i) {
-              if (event.results[i].isFinal)
-                final_transcript += event.results[i][0].transcript;
-            }
-            console.log(final_transcript);
+        // 使用取得Cook_Id的資料
+        const BASE_URL = "http://localhost:5000/AICook/Cook/";
+        var accessToken = localStorage.getItem('accessToken');
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Bearer " + accessToken);
 
-            if (final_transcript.includes("下一步")) {
-              stepNumber++;
-              fetchAndRenderNextStep();
-            } else if (final_transcript.includes("再說一次")) {
-              fetchAndRenderNextStep();
-            } else if (final_transcript.includes("上一步")) {
-              stepNumber--;
-              fetchAndRenderNextStep();
-            } else
-              console.log("辨識失敗");
-          };
-
-          recognition.start();
-        }
-        startVoiceRecognition();
         // 用於獲取並渲染下一步數據的函數
-
         async function fetchAndRenderNextStep() {
-          // 使用取得Cook_Id的資料
-          const cookId = urlParams.searchParams.get('id');
-          const BASE_URL = "http://localhost:5000/AICook/Cook/";
-          var accessToken = localStorage.getItem('accessToken');
-          var myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-          myHeaders.append("Authorization", "Bearer " + accessToken);
           try {
             var response = await fetch(BASE_URL + `${cookId}/Teach/StartCook/${stepNumber}`, {
               method: 'GET',
@@ -209,6 +171,8 @@
             }
 
             var data = await response.json();
+            console.log('Data',data);
+            console.log(stepNumber);
             renderData(data, stepNumber);
           } catch (error) {
             if (error instanceof TypeError) {
@@ -218,11 +182,62 @@
             }
           }
         }
-
         // 初始的數據獲取和渲染
         fetchAndRenderNextStep();
 
+//語音控制start
+        const recognition = new webkitSpeechRecognition();
+        let transcript = '';
+        // 設置語音辨識選項
+        recognition.continuous = true;  // 連續模式
 
+        // 監聽語音辨識結果
+        recognition.onresult = async(event) => {
+            const resultElement = document.getElementById('result');
+            transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            console.log('語音輸入：', transcript);
+            if(transcript.includes('下一步')){
+                console.log('辨識成功');
+                transcript = '';
+                stepNumber++;
+                // 獲取並渲染下一步數據
+                await fetchAndRenderNextStep();
+                recognition.stop()
+                setTimeout(() => {
+                    recognition.start();
+                }, 5000);
+            }
+            else if(transcript.includes('上一步')){
+              console.log('辨識成功');
+              transcript = '';
+              stepNumber--;
+              // 獲取並渲染下一步數據
+              await fetchAndRenderNextStep();
+              recognition.stop()
+              setTimeout(() => {
+                  recognition.start();
+              }, 5000);
+            }
+            else if(transcript.includes('再說一次')){
+              console.log('辨識成功');
+              transcript = '';
+              // 獲取並渲染下一步數據
+              await fetchAndRenderNextStep();
+              recognition.stop()
+              setTimeout(() => {
+                  recognition.start();
+              }, 5000);
+            }
+            else{
+                console.log('辨識失敗');
+            }
+        };
+        // 開始語音辨識
+        recognition.start();
+//語音控制end
 
         // // 下一步
         // nextStepButton.addEventListener("click", async function () {
@@ -240,11 +255,7 @@
         //   // 獲取並渲染下一步數據
         //   fetchAndRenderNextStep();
         // });
-
-
       }
-
-
     });
 
     // 套用料理名稱
@@ -263,11 +274,6 @@
 
       // 語音
       const audioElement = document.getElementById('myAudio');
-      const playButton = document.querySelector('.playButton');
-
-      playButton.addEventListener('click', function () {
-        audioElement.play();
-      });
 
       // 料理步驟
       if (stepNumber < 3) {
@@ -276,22 +282,19 @@
         if (stepNumber === 1) {
           // 撥放音檔
           audioElement.src = './audios/Cook/' + apiData.id + '/' + apiData.id + '_food.mp3';
-          playButton.autoplay = true;
         }
         if (stepNumber === 2) {
           // 撥放音檔
           audioElement.src = './audios/Cook/' + apiData.id + '/' + apiData.id + '_seasoning.mp3';
-          playButton.disabled = false;
         }
       }
       else {
-        // dishStep.innerHTML = ''; // 清空步驟描述
+        dishStep.innerHTML = ''; // 清空步驟描述
         if (apiData.processing_Description != null) {
           dishStep.textContent = apiData.processing_Description;
           dishPic.src = './images/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_procesing_' + (processing_num) + '.jpeg';
           // 撥放音檔
           audioElement.src = './audios/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_procesing_' + (processing_num) + '.mp3';
-          playButton.disabled = false;
           processing_num++;
         }
         else if (apiData.step_Description != null) {
@@ -299,7 +302,6 @@
           dishPic.src = './images/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_step_' + (step_num) + '.jpg';
           // 撥放音檔
           audioElement.src = './audios/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_step_' + (step_num) + '.mp3';
-          playButton.disabled = false;
           step_num++;
         }
         else if (apiData === "已完成料理教程！") {
