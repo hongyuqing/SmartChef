@@ -112,6 +112,12 @@
     // 當前畫面
     let processing_num = 1;
     let step_num = 1;
+    var recognition = new webkitSpeechRecognition(); // 建立語音辨識物件 webkitSpeechRecognition
+    recognition.continuous = true; // 設定連續辨識模式
+    recognition.interimResults = true; // 設定輸出中先結果。
+    var final_transcript = ''; // 最終的辨識訊息的變數
+    var recognizing = false; // 是否辨識中
+
     // 下一步
     document.addEventListener("DOMContentLoaded", async function () {
       // 從URL提取Cook_Id
@@ -157,15 +163,40 @@
             console.error('Error:', error.message);
           }
         }
-        // 使用取得Cook_Id的資料
-        const BASE_URL = "http://localhost:5000/AICook/Cook/";
-        var accessToken = localStorage.getItem('accessToken');
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Bearer " + accessToken);
+        function startVoiceRecognition() {
+          recognition.onresult = function (event) {
+            var final_transcript = '';
+            for (var i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal)
+                final_transcript += event.results[i][0].transcript;
+            }
+            console.log(final_transcript);
 
+            if (final_transcript.includes("下一步")) {
+              stepNumber++;
+              fetchAndRenderNextStep();
+            } else if (final_transcript.includes("再說一次")) {
+              fetchAndRenderNextStep();
+            } else if (final_transcript.includes("上一步")) {
+              stepNumber--;
+              fetchAndRenderNextStep();
+            } else
+              console.log("辨識失敗");
+          };
+
+          recognition.start();
+        }
+        startVoiceRecognition();
         // 用於獲取並渲染下一步數據的函數
+
         async function fetchAndRenderNextStep() {
+          // 使用取得Cook_Id的資料
+          const cookId = urlParams.searchParams.get('id');
+          const BASE_URL = "http://localhost:5000/AICook/Cook/";
+          var accessToken = localStorage.getItem('accessToken');
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          myHeaders.append("Authorization", "Bearer " + accessToken);
           try {
             var response = await fetch(BASE_URL + `${cookId}/Teach/StartCook/${stepNumber}`, {
               method: 'GET',
@@ -178,8 +209,6 @@
             }
 
             var data = await response.json();
-            console.log(data);
-            console.log(stepNumber);
             renderData(data, stepNumber);
           } catch (error) {
             if (error instanceof TypeError) {
@@ -189,26 +218,33 @@
             }
           }
         }
+
         // 初始的數據獲取和渲染
         fetchAndRenderNextStep();
 
-        // 下一步
-        nextStepButton.addEventListener("click", async function () {
-          stepNumber++;
-          // 獲取並渲染下一步數據
-          fetchAndRenderNextStep();
-        });
-        // 再一次
-        repeatStepButton.addEventListener("click", async function () {
-          fetchAndRenderNextStep();
-        });
-        // 上一步
-        partStepButton.addEventListener("click", async function () {
-          stepNumber--;
-          // 獲取並渲染下一步數據
-          fetchAndRenderNextStep();
-        });
+
+
+        // // 下一步
+        // nextStepButton.addEventListener("click", async function () {
+        //   stepNumber++;
+        //   // 獲取並渲染下一步數據
+        //   fetchAndRenderNextStep();
+        // });
+        // // 再一次
+        // repeatStepButton.addEventListener("click", async function () {
+        //   fetchAndRenderNextStep();
+        // });
+        // // 上一步
+        // partStepButton.addEventListener("click", async function () {
+        //   stepNumber--;
+        //   // 獲取並渲染下一步數據
+        //   fetchAndRenderNextStep();
+        // });
+
+
       }
+
+
     });
 
     // 套用料理名稱
@@ -249,7 +285,7 @@
         }
       }
       else {
-        dishStep.innerHTML = ''; // 清空步驟描述
+        // dishStep.innerHTML = ''; // 清空步驟描述
         if (apiData.processing_Description != null) {
           dishStep.textContent = apiData.processing_Description;
           dishPic.src = './images/Cook/' + apiData.cook_Id + '/' + apiData.cook_Id + '_procesing_' + (processing_num) + '.jpeg';
